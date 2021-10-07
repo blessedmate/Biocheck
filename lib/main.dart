@@ -13,10 +13,6 @@ void main() {
       debugShowCheckedModeBanner: false,
       theme: ThemeData(
         fontFamily: 'Airbnb',
-        // textTheme: Theme.of(context).textTheme.apply(
-        //       bodyColor: Colors.black,
-        //       displayColor: Colors.black,
-        //     )
       ),
     ),
   );

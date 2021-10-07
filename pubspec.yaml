@@ -18,4 +18,18 @@ dev_dependencies:
 
 flutter: 
   uses-material-design: true
+  fonts:
+    - family: Airbnb
+      fonts:
+        - asset: assets/fonts/AirbnbCerealLight.ttf
+          weight: 300
+        - asset: assets/fonts/AirbnbCerealMedium.ttf
+          weight: 400
+        - asset: assets/fonts/AirbnbCerealBold.ttf
+          weight: 700
+        - asset: assets/fonts/AirbnbCerealExtraBold.ttf
+          weight: 900
+  assets:
+    - assets/
+
 
