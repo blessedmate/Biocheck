@@ -73,7 +73,7 @@ class BeginEvaluationView extends GetView<BeginEvaluationController> {
       onTap: () {},
       child: Container(
           height: 80,
-          padding: const EdgeInsets.all(10),
+          padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 15),
           margin: const EdgeInsets.symmetric(vertical: 10, horizontal: 15),
           decoration: BoxDecoration(
               borderRadius: BorderRadius.circular(10),
@@ -85,22 +85,31 @@ class BeginEvaluationView extends GetView<BeginEvaluationController> {
                     blurRadius: 4,
                     spreadRadius: 2)
               ]),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            mainAxisAlignment: MainAxisAlignment.center,
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              Text(
-                medicineField.toString(),
-                style:
-                    const TextStyle(color: Palette.primaryColor, fontSize: 14),
+              Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Text(
+                    medicineField.toString(),
+                    style: const TextStyle(
+                        color: Palette.primaryColor, fontSize: 14),
+                  ),
+                  const SizedBox(
+                    height: 10,
+                  ),
+                  Text(
+                    surgeryType,
+                    style: const TextStyle(color: Colors.black, fontSize: 18),
+                  ),
+                ],
               ),
-              const SizedBox(
-                height: 10,
-              ),
-              Text(
-                surgeryType,
-                style: const TextStyle(color: Colors.black, fontSize: 18),
-              ),
+              const Icon(
+                Icons.add_circle_outline_sharp,
+                color: Palette.primaryColor,
+              )
             ],
           )),
     );
