@@ -17,4 +17,7 @@ class TypographyStyles {
 
   static const subtitle = TextStyle(
       fontSize: 18, fontFamily: 'Airbnb', fontWeight: FontWeight.w500);
+
+  static const evaluationOptions = TextStyle(
+      fontSize: 14, fontFamily: 'Airbnb', fontWeight: FontWeight.w500);
 }

@@ -27,7 +27,7 @@ class NewEvaluationView extends GetView<NewEvaluationController> {
           children: <Widget>[
             const SizedBox(height: 10),
             group('Diagnosis', controller.options, controller.val),
-            group('Prueba', controller.optionsb, controller.vale),
+            group('Axial', controller.optionsb, controller.vale),
             saveAndPredict(),
           ],
         ),
@@ -49,22 +49,25 @@ class NewEvaluationView extends GetView<NewEvaluationController> {
               crossAxisCount: 2,
               childAspectRatio: (3 / 1),
               crossAxisSpacing: 5,
-              mainAxisSpacing: 5,
+              mainAxisSpacing: 1,
             ),
             itemBuilder: (context, index) => Obx(() => SizedBox(
                   width: Get.width * 0.4,
                   height: 40,
-                  // color: Colors.red,
                   child: Row(
                     children: [
                       Radio(
+                        activeColor: Palette.secondaryColor,
                         value: options[index],
                         groupValue: onChangeValue.value,
                         onChanged: (value) {
                           onChangeValue.value = value as String;
                         },
                       ),
-                      Text(options[index])
+                      Text(
+                        options[index],
+                        style: TypographyStyles.evaluationOptions,
+                      )
                     ],
                   ),
                 ))),
