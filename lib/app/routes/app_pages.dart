@@ -1,13 +1,15 @@
-import 'package:biocheck_flutter/app/modules/evaluations/bindings/evaluations_binding.dart';
-import 'package:biocheck_flutter/app/modules/evaluations/views/evaluations_view.dart';
-import 'package:biocheck_flutter/app/modules/sign_in/bindings/sign_in_binding.dart';
-import 'package:biocheck_flutter/app/modules/sign_in/views/sign_in_view.dart';
 import 'package:get/get.dart';
 
 import 'package:biocheck_flutter/app/modules/begin_evaluation/bindings/begin_evaluation_binding.dart';
 import 'package:biocheck_flutter/app/modules/begin_evaluation/views/begin_evaluation_view.dart';
+import 'package:biocheck_flutter/app/modules/evaluations/bindings/evaluations_binding.dart';
+import 'package:biocheck_flutter/app/modules/evaluations/views/evaluations_view.dart';
 import 'package:biocheck_flutter/app/modules/home/bindings/home_binding.dart';
 import 'package:biocheck_flutter/app/modules/home/views/home_view.dart';
+import 'package:biocheck_flutter/app/modules/new_evaluation/bindings/new_evaluation_binding.dart';
+import 'package:biocheck_flutter/app/modules/new_evaluation/views/new_evaluation_view.dart';
+import 'package:biocheck_flutter/app/modules/sign_in/bindings/sign_in_binding.dart';
+import 'package:biocheck_flutter/app/modules/sign_in/views/sign_in_view.dart';
 
 part 'app_routes.dart';
 
@@ -36,6 +38,11 @@ class AppPages {
       name: _Paths.EVALUATIONS,
       page: () => EvaluationsView(),
       binding: EvaluationsBinding(),
+    ),
+    GetPage(
+      name: _Paths.NEW_EVALUATION,
+      page: () => NewEvaluationView(),
+      binding: NewEvaluationBinding(),
     ),
   ];
 }

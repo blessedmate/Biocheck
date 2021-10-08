@@ -1,4 +1,7 @@
+import 'package:biocheck_flutter/app/global_widgets/input.dart';
+import 'package:biocheck_flutter/app/routes/app_pages.dart';
 import 'package:biocheck_flutter/app/utils/palette.dart';
+import 'package:biocheck_flutter/app/utils/typography_styles.dart';
 import 'package:flutter/material.dart';
 
 import 'package:get/get.dart';
@@ -10,7 +13,7 @@ class BeginEvaluationView extends GetView<BeginEvaluationController> {
   final AppBar appbar = AppBar(
     title: const Text(
       'New Evaluation',
-      style: TextStyle(fontSize: 25),
+      style: TypographyStyles.title,
     ),
     foregroundColor: Colors.black,
     backgroundColor: Colors.white,
@@ -36,16 +39,18 @@ class BeginEvaluationView extends GetView<BeginEvaluationController> {
     return Container(
       margin: const EdgeInsets.symmetric(horizontal: 30, vertical: 20),
       height: 60,
-      child: TextField(
-        textCapitalization: TextCapitalization.sentences,
-        decoration: InputDecoration(
-          border: OutlineInputBorder(
-            borderRadius: BorderRadius.circular(10),
-          ),
-          labelText: 'Search format',
-          prefixIcon: const Icon(Icons.search),
-        ),
-      ),
+      child: const CustomInput(
+          icon: Icon(Icons.search), labelText: 'Search format'),
+      // TextField(
+      //   textCapitalization: TextCapitalization.sentences,
+      //   decoration: InputDecoration(
+      //     border: OutlineInputBorder(
+      //       borderRadius: BorderRadius.circular(10),
+      //     ),
+      //     labelText: 'Search format',
+      //     prefixIcon: const Icon(Icons.search),
+      //   ),
+      // ),
     );
   }
 
@@ -70,7 +75,7 @@ class BeginEvaluationView extends GetView<BeginEvaluationController> {
     String surgeryType = 'Paranasal Sinus Endoscopy';
 
     return GestureDetector(
-      onTap: () {},
+      onTap: () => Get.toNamed(Routes.NEW_EVALUATION),
       child: Container(
           height: 80,
           padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 15),
