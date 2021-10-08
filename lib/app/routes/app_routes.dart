@@ -9,6 +9,7 @@ abstract class Routes {
   static const EVALUATIONS = _Paths.EVALUATIONS;
   static const BEGIN_EVALUATION = _Paths.BEGIN_EVALUATION;
   static const NEW_EVALUATION = _Paths.NEW_EVALUATION;
+  static const SIGN_UP = _Paths.SIGN_UP;
 }
 
 abstract class _Paths {
@@ -17,4 +18,5 @@ abstract class _Paths {
   static const EVALUATIONS = '/evaluations';
   static const BEGIN_EVALUATION = '/begin-evaluation';
   static const NEW_EVALUATION = '/new-evaluation';
+  static const SIGN_UP = '/sign-up';
 }
