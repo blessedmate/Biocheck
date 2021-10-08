@@ -1,3 +1,4 @@
+import 'package:biocheck_flutter/app/utils/palette.dart';
 import 'package:flutter/material.dart';
 
 class TypographyStyles {
@@ -20,4 +21,10 @@ class TypographyStyles {
 
   static const evaluationOptions = TextStyle(
       fontSize: 14, fontFamily: 'Airbnb', fontWeight: FontWeight.w500);
+
+  static const signIn = TextStyle(
+      fontSize: 14,
+      fontFamily: 'Airbnb',
+      fontWeight: FontWeight.w500,
+      color: Palette.primaryColor);
 }
