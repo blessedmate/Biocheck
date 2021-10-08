@@ -1,30 +1,31 @@
+import 'package:biocheck_flutter/app/routes/app_pages.dart';
 import 'package:get/get.dart';
 
 class NewEvaluationController extends GetxController {
-  List<String> options = ['Crswnp', 'Other', 'hausua', 'jaijais'];
+  final finished = false.obs;
+
+  final val = ''.obs;
+  final vale = ''.obs;
+
+  List<String> options = ['Crswnp', 'JAIS', 'Hausa', 'Other'];
   List<String> optionsb = [
-    'Crswnp',
-    'zzz',
-    'hola',
-    'sapa',
-    'Crswnp',
-    'zzz',
-    'impar'
+    'Crswnd',
+    'Spfiax',
+    'RRoxc',
+    'TTreT',
+    'Pobpy',
+    'LoaYY',
+    'MFghSC'
   ];
-  // List<String> optionsb = ['QIJISIQ', 'WDADS', 'hAWAD', 'ASDDA'];
-  // List<RxString> streams = [];
-  final count = 0.obs;
-  @override
-  void onInit() {
-    super.onInit();
+
+  showWarning(onChangeValue) {
+    return onChangeValue.value == '' && finished.value;
   }
 
-  @override
-  void onReady() {
-    super.onReady();
+  submit() {
+    finished.value = true;
+    if (val.value != '' && vale.value != '') {
+      Get.offAndToNamed(Routes.EVALUATIONS);
+    }
   }
-
-  @override
-  void onClose() {}
-  void increment() => count.value++;
 }

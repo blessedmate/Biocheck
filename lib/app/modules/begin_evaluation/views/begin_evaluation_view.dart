@@ -1,6 +1,7 @@
 import 'package:biocheck_flutter/app/global_widgets/input.dart';
 import 'package:biocheck_flutter/app/routes/app_pages.dart';
 import 'package:biocheck_flutter/app/utils/palette.dart';
+import 'package:biocheck_flutter/app/utils/typography_styles.dart';
 import 'package:flutter/material.dart';
 
 import 'package:get/get.dart';
@@ -12,7 +13,7 @@ class BeginEvaluationView extends GetView<BeginEvaluationController> {
   final AppBar appbar = AppBar(
     title: const Text(
       'New Evaluation',
-      style: TextStyle(fontSize: 25),
+      style: TypographyStyles.title,
     ),
     foregroundColor: Colors.black,
     backgroundColor: Colors.white,
