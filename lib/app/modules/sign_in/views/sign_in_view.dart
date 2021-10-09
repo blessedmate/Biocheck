@@ -1,6 +1,7 @@
 import 'package:biocheck_flutter/app/global_widgets/input.dart';
 import 'package:biocheck_flutter/app/global_widgets/primary_button.dart';
 import 'package:biocheck_flutter/app/routes/app_pages.dart';
+import 'package:biocheck_flutter/app/utils/palette.dart';
 import 'package:biocheck_flutter/app/utils/typography_styles.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -109,7 +110,27 @@ class SignInView extends GetView<SignInController> {
                           text: 'SIGN IN',
                         ),
                       )),
-                  const Expanded(child: SizedBox()),
+                  const SizedBox(height: 15),
+                  Center(
+                      child: TextButton(
+                    onPressed: () async {
+                      final isAuthenticated = await controller.authenticate();
+                      if (isAuthenticated) {
+                        controller.fingerCheck();
+                      }
+                    },
+                    child: const Icon(
+                      Icons.fingerprint,
+                      color: Palette.primaryColor,
+                      size: 40,
+                    ),
+                    style: TextButton.styleFrom(
+                      primary: Colors.white,
+                      elevation: 0,
+                    ),
+                  )),
+                  const SizedBox(height: 15),
+
                   Center(
                     child: GestureDetector(
                       onTap: () {},
