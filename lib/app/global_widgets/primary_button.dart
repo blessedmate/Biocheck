@@ -1,15 +1,38 @@
-import 'package:biocheck_flutter/app/routes/app_pages.dart';
+import 'package:biocheck_flutter/app/utils/palette.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 class CustomButton extends StatelessWidget {
-  const CustomButton({Key? key}) : super(key: key);
+  final VoidCallback onPressed;
+  final String text;
+  final bool loading;
+  const CustomButton(
+      {Key? key,
+      required this.onPressed,
+      required this.text,
+      this.loading = false})
+      : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return ElevatedButton(
-      onPressed: () => Get.offAllNamed(Routes.EVALUATIONS),
-      child: Text('SIGN IN'),
+      style: ElevatedButton.styleFrom(
+        primary: Palette.primaryColor,
+        onPrimary: Colors.white,
+        shadowColor: Colors.greenAccent,
+        elevation: 3,
+        shape:
+            RoundedRectangleBorder(borderRadius: BorderRadius.circular(16.0)),
+        minimumSize: Size(Get.width * 0.8, 55), //////// HERE
+      ),
+      onPressed: onPressed,
+      child: loading
+          ? Center(
+              child: CircularProgressIndicator(
+                color: Colors.white,
+              ),
+            )
+          : Text(text, style: const TextStyle(fontSize: 18)),
     );
   }
 }
