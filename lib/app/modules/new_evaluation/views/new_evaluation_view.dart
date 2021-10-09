@@ -13,9 +13,6 @@ class NewEvaluationView extends GetView<NewEvaluationController> {
       'Evaluation',
       style: TypographyStyles.title,
     ),
-    foregroundColor: Colors.black,
-    backgroundColor: Colors.white,
-    elevation: 0,
   );
 
   @override

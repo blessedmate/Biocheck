@@ -3,7 +3,11 @@ import 'package:flutter/material.dart';
 
 class TypographyStyles {
   static const title = TextStyle(
-      fontSize: 24, fontFamily: 'Airbnb', fontWeight: FontWeight.w500);
+    fontSize: 24,
+    fontFamily: 'Airbnb',
+    fontWeight: FontWeight.w500,
+    color: Colors.black,
+  );
 
   static const warning = TextStyle(
       fontSize: 14,
@@ -23,8 +27,8 @@ class TypographyStyles {
       fontSize: 14, fontFamily: 'Airbnb', fontWeight: FontWeight.w500);
 
   static const signIn = TextStyle(
-      fontSize: 14,
+      fontSize: 18,
       fontFamily: 'Airbnb',
-      fontWeight: FontWeight.w500,
+      fontWeight: FontWeight.w400,
       color: Palette.primaryColor);
 }

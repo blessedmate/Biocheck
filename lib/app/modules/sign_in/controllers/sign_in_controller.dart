@@ -3,8 +3,6 @@ import 'package:biocheck_flutter/app/routes/app_pages.dart';
 import 'package:get/get.dart';
 
 class SignInController extends GetxController {
-  final passwrod = ''.obs;
-
   final _loading = false.obs;
   bool get loading => _loading.value;
   set loading(bool newValue) => _loading.value = newValue;

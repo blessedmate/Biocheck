@@ -1,5 +1,6 @@
 import 'package:biocheck_flutter/app/routes/app_pages.dart';
 import 'package:biocheck_flutter/app/utils/palette.dart';
+import 'package:biocheck_flutter/app/utils/typography_styles.dart';
 import 'package:flutter/material.dart';
 
 import 'package:get/get.dart';
@@ -20,11 +21,9 @@ class EvaluationsView extends GetView<EvaluationsController> {
         elevation: 0,
       ),
     ),
-    //TODO: Personalizar color y font de AppBar
-    title: const Text('BioCheck', style: TextStyle(fontSize: 25)),
-    foregroundColor: Colors.black,
-    backgroundColor: Colors.white,
-    elevation: 0,
+    title: const Text(
+      'BioCheck',
+    ),
   );
 
   @override
@@ -47,15 +46,10 @@ class EvaluationsView extends GetView<EvaluationsController> {
       height: 65,
       // color: Colors.green,
       child: ElevatedButton(
-        onPressed: () => Get.toNamed(Routes.BEGIN_EVALUATION),
+        onPressed: () => controller.beginEvaluation(),
         child: const Text(
           'Begin Evaluation +',
-          style: TextStyle(
-            fontSize: 18,
-            fontFamily: 'Airbnb',
-            //TODO: ACA ---------------------
-            package: 'fonts/AirbnbCerealLight.ttf',
-          ),
+          style: TypographyStyles.subtitle,
         ),
         style: ElevatedButton.styleFrom(
           primary: Palette.primaryColor,
@@ -91,7 +85,9 @@ class EvaluationsView extends GetView<EvaluationsController> {
     String location = 'Radis Gallery - Santa Cruz, CA';
 
     return GestureDetector(
-      onTap: () {},
+      onTap: () {
+        controller.previousEvaluationDetail();
+      },
       child: Container(
           height: 90,
           padding: const EdgeInsets.all(10),
