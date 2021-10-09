@@ -21,13 +21,21 @@ class BeginEvaluationView extends GetView<BeginEvaluationController> {
     return Scaffold(
       appBar: appbar,
       body: SingleChildScrollView(
-        child: Column(
+          child: controller.obx(
+        (evaluations) => Column(
           children: [
             _searchBar(),
             _evaluationsList(),
           ],
         ),
-      ),
+        onLoading: SizedBox(
+          height: Get.height,
+          child: const Center(
+            child: CircularProgressIndicator(),
+          ),
+        ),
+        onError: (error) => const Center(child: Text('Upps')),
+      )),
     );
   }
 
