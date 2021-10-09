@@ -6,14 +6,18 @@ import 'package:get/get.dart';
 import 'app/routes/app_pages.dart';
 
 void main() {
+  final ThemeData theme =
+      ThemeData(fontFamily: 'Airbnb', primaryColor: Palette.primaryColor);
+
   runApp(
     GetMaterialApp(
-      title: 'BioCheck App',
-      initialRoute: AppPages.INITIAL,
-      getPages: AppPages.routes,
-      debugShowCheckedModeBanner: false,
-      theme:
-          ThemeData(fontFamily: 'Airbnb', primaryColor: Palette.primaryColor),
-    ),
+        title: 'BioCheck App',
+        initialRoute: AppPages.INITIAL,
+        getPages: AppPages.routes,
+        debugShowCheckedModeBanner: false,
+        theme: theme.copyWith(
+          colorScheme:
+              theme.colorScheme.copyWith(secondary: Palette.primaryColor),
+        )),
   );
 }
