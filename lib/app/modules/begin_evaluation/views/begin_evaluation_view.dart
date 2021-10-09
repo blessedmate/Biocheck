@@ -39,8 +39,11 @@ class BeginEvaluationView extends GetView<BeginEvaluationController> {
     return Container(
       margin: const EdgeInsets.symmetric(horizontal: 30, vertical: 20),
       height: 60,
-      child: const CustomInput(
-          icon: Icon(Icons.search), labelText: 'Search format'),
+      child: CustomInput(
+        icon: Icon(Icons.search),
+        labelText: 'Search format',
+        onChanged: (param) {},
+      ),
       // TextField(
       //   textCapitalization: TextCapitalization.sentences,
       //   decoration: InputDecoration(
