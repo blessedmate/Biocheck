@@ -27,8 +27,8 @@ class TypographyStyles {
       fontSize: 14, fontFamily: 'Airbnb', fontWeight: FontWeight.w500);
 
   static const signIn = TextStyle(
-      fontSize: 14,
+      fontSize: 18,
       fontFamily: 'Airbnb',
-      fontWeight: FontWeight.w500,
+      fontWeight: FontWeight.w400,
       color: Palette.primaryColor);
 }

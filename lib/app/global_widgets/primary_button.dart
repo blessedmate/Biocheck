@@ -23,11 +23,11 @@ class CustomButton extends StatelessWidget {
         elevation: 3,
         shape:
             RoundedRectangleBorder(borderRadius: BorderRadius.circular(16.0)),
-        minimumSize: Size(Get.width * 0.8, 55), //////// HERE
+        minimumSize: Size(Get.width * 0.8, 55),
       ),
-      onPressed: onPressed,
+      onPressed: loading ? () {} : onPressed,
       child: loading
-          ? Center(
+          ? const Center(
               child: CircularProgressIndicator(
                 color: Colors.white,
               ),

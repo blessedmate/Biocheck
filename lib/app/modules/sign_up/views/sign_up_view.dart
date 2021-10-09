@@ -1,4 +1,5 @@
 import 'package:biocheck_flutter/app/global_widgets/input.dart';
+import 'package:biocheck_flutter/app/global_widgets/primary_button.dart';
 import 'package:biocheck_flutter/app/utils/palette.dart';
 import 'package:biocheck_flutter/app/utils/typography_styles.dart';
 import 'package:flutter/material.dart';
@@ -33,7 +34,7 @@ class SignUpView extends GetView<SignUpController> {
               CustomInput(
                 icon: const FaIcon(FontAwesomeIcons.user),
                 labelText: 'Username',
-                onChanged: (param) {},
+                onChanged: (val) => controller.username = val,
               ),
               const SizedBox(
                 height: 25,
@@ -41,7 +42,7 @@ class SignUpView extends GetView<SignUpController> {
               CustomInput(
                 icon: const FaIcon(FontAwesomeIcons.envelope),
                 labelText: 'Email',
-                onChanged: (param) {},
+                onChanged: (val) => controller.email = val,
               ),
               const SizedBox(
                 height: 25,
@@ -49,39 +50,48 @@ class SignUpView extends GetView<SignUpController> {
               CustomInput(
                 icon: const FaIcon(FontAwesomeIcons.lock),
                 labelText: 'Password',
-                onChanged: (param) {},
+                onChanged: (val) => controller.password = val,
               ),
               const SizedBox(
                 height: 25,
               ),
               CustomInput(
                 icon: const FaIcon(FontAwesomeIcons.lock),
-                labelText: 'Password',
-                onChanged: (param) {},
+                labelText: 'Confirm password',
+                onChanged: (val) => controller.confirmPassword = val,
               ),
               const SizedBox(
                 height: 30,
               ),
-              Center(
-                child: ElevatedButton(
-                  onPressed: () => controller.submit(),
-                  child: const Text(
-                    'Sign Up',
-                    style: TypographyStyles.bigbuttons,
-                  ),
-                  style: ElevatedButton.styleFrom(
-                      primary: Palette.primaryColor,
-                      shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(10)),
-                      fixedSize: const Size(250, 60)),
-                ),
+              GetBuilder<SignUpController>(
+                  id: 'warning',
+                  builder: (_) => controller.error
+                      ? Center(
+                          child: Text(
+                            controller.message,
+                            textAlign: TextAlign.center,
+                            style: TypographyStyles.warning,
+                          ),
+                        )
+                      : Container()),
+              const SizedBox(
+                height: 10,
               ),
+              Obx(() => Align(
+                    alignment: Alignment.center,
+                    child: CustomButton(
+                      loading: controller.loading,
+                      onPressed: () => controller.signUp(),
+                      text: 'SIGN UP',
+                    ),
+                  )),
               const SizedBox(
                 height: 30,
               ),
               Row(mainAxisAlignment: MainAxisAlignment.center, children: [
                 const Text(
                   'Already have an account?',
+                  style: TextStyle(fontSize: 18),
                 ),
                 TextButton(
                     onPressed: () => controller.goToSignIn(),
