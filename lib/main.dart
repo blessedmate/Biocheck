@@ -5,11 +5,14 @@ import 'package:flutter/services.dart';
 
 import 'package:get/get.dart';
 
+import 'app/global_widgets/controllers/main_controller.dart';
 import 'app/routes/app_pages.dart';
 
 void main() {
   final ThemeData theme =
       ThemeData(fontFamily: 'Airbnb', primaryColor: Palette.primaryColor);
+
+  Get.put(MainController());
 
   runApp(
     GetMaterialApp(

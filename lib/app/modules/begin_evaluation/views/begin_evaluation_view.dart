@@ -74,7 +74,7 @@ class BeginEvaluationView extends GetView<BeginEvaluationController> {
     String surgeryType = 'Paranasal Sinus Endoscopy';
 
     return GestureDetector(
-      onTap: () => Get.toNamed(Routes.NEW_EVALUATION),
+      onTap: () => controller.tapOnEvaluationItem(),
       child: Container(
           height: 80,
           padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 15),
