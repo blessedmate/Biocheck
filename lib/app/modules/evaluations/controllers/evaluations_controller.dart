@@ -1,20 +1,12 @@
+import 'package:biocheck_flutter/app/routes/app_pages.dart';
 import 'package:get/get.dart';
 
 class EvaluationsController extends GetxController {
-  //TODO: Implement EvaluationsController
-
-  final count = 0.obs;
-  @override
-  void onInit() {
-    super.onInit();
+  beginEvaluation() {
+    Get.toNamed(Routes.BEGIN_EVALUATION);
   }
 
-  @override
-  void onReady() {
-    super.onReady();
+  previousEvaluationDetail() {
+    Get.toNamed(Routes.RISK_ASSESSMENT);
   }
-
-  @override
-  void onClose() {}
-  void increment() => count.value++;
 }

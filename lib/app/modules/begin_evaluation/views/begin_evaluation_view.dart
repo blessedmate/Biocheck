@@ -13,11 +13,7 @@ class BeginEvaluationView extends GetView<BeginEvaluationController> {
   final AppBar appbar = AppBar(
     title: const Text(
       'New Evaluation',
-      style: TypographyStyles.title,
     ),
-    foregroundColor: Colors.black,
-    backgroundColor: Colors.white,
-    elevation: 0,
   );
 
   @override
@@ -41,16 +37,6 @@ class BeginEvaluationView extends GetView<BeginEvaluationController> {
       height: 60,
       child: const CustomInput(
           icon: Icon(Icons.search), labelText: 'Search format'),
-      // TextField(
-      //   textCapitalization: TextCapitalization.sentences,
-      //   decoration: InputDecoration(
-      //     border: OutlineInputBorder(
-      //       borderRadius: BorderRadius.circular(10),
-      //     ),
-      //     labelText: 'Search format',
-      //     prefixIcon: const Icon(Icons.search),
-      //   ),
-      // ),
     );
   }
 

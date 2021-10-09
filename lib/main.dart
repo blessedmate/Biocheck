@@ -1,5 +1,7 @@
 import 'package:biocheck_flutter/app/utils/palette.dart';
+import 'package:biocheck_flutter/app/utils/typography_styles.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 
 import 'package:get/get.dart';
 
@@ -12,8 +14,16 @@ void main() {
       initialRoute: AppPages.INITIAL,
       getPages: AppPages.routes,
       debugShowCheckedModeBanner: false,
-      theme:
-          ThemeData(fontFamily: 'Airbnb', primaryColor: Palette.primaryColor),
+      theme: ThemeData(
+          fontFamily: 'Airbnb',
+          primaryColor: Palette.primaryColor,
+          appBarTheme: const AppBarTheme(
+            color: Colors.white,
+            foregroundColor: Palette.primaryColor,
+            elevation: 0,
+            centerTitle: false,
+            titleTextStyle: TypographyStyles.title,
+          )),
     ),
   );
 }

@@ -8,6 +8,8 @@ import 'package:biocheck_flutter/app/modules/home/bindings/home_binding.dart';
 import 'package:biocheck_flutter/app/modules/home/views/home_view.dart';
 import 'package:biocheck_flutter/app/modules/new_evaluation/bindings/new_evaluation_binding.dart';
 import 'package:biocheck_flutter/app/modules/new_evaluation/views/new_evaluation_view.dart';
+import 'package:biocheck_flutter/app/modules/risk_assessment/bindings/risk_assessment_binding.dart';
+import 'package:biocheck_flutter/app/modules/risk_assessment/views/risk_assessment_view.dart';
 import 'package:biocheck_flutter/app/modules/sign_in/bindings/sign_in_binding.dart';
 import 'package:biocheck_flutter/app/modules/sign_in/views/sign_in_view.dart';
 import 'package:biocheck_flutter/app/modules/sign_up/bindings/sign_up_binding.dart';
@@ -50,6 +52,11 @@ class AppPages {
       name: _Paths.SIGN_UP,
       page: () => SignUpView(),
       binding: SignUpBinding(),
+    ),
+    GetPage(
+      name: _Paths.RISK_ASSESSMENT,
+      page: () => RiskAssessmentView(),
+      binding: RiskAssessmentBinding(),
     ),
   ];
 }
