@@ -1,6 +1,8 @@
 import 'package:biocheck_flutter/app/modules/sign_in/providers/auth_provider.dart';
 import 'package:biocheck_flutter/app/routes/app_pages.dart';
+import 'package:flutter/services.dart';
 import 'package:get/get.dart';
+import 'package:local_auth/local_auth.dart';
 
 class SignInController extends GetxController {
   final _loading = false.obs;
@@ -36,5 +38,35 @@ class SignInController extends GetxController {
     }
     loading = false;
     update(['warning']);
+  }
+
+  fingerCheck() {
+    Get.toNamed(Routes.EVALUATIONS);
+  }
+
+  static final _auth = LocalAuthentication();
+
+  static Future<bool> hasBiometrics() async {
+    try {
+      return await _auth.canCheckBiometrics;
+    } on PlatformException catch (e) {
+      return false;
+      //TODO: No previous fingerprint message
+    }
+  }
+
+  Future<bool> authenticate() async {
+    final isAvailable = await hasBiometrics();
+    if (!isAvailable) return false;
+    try {
+      return await _auth.authenticate(
+        biometricOnly: true,
+        localizedReason: 'Scan Fingerprint to Authenticate',
+        useErrorDialogs: true,
+        stickyAuth: true,
+      );
+    } on PlatformException catch (e) {
+      return false;
+    }
   }
 }
