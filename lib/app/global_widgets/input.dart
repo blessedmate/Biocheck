@@ -1,9 +1,16 @@
+import 'package:biocheck_flutter/app/utils/palette.dart';
 import 'package:flutter/material.dart';
 
 class CustomInput extends StatelessWidget {
   final Widget icon;
   final String labelText;
-  const CustomInput({Key? key, required this.icon, required this.labelText})
+  // final ValueSetter<String> onChanged;
+  final Function(String) onChanged;
+  const CustomInput(
+      {Key? key,
+      required this.icon,
+      required this.labelText,
+      required this.onChanged})
       : super(key: key);
 
   @override
@@ -12,18 +19,29 @@ class CustomInput extends StatelessWidget {
       height: 60,
       padding: const EdgeInsets.symmetric(horizontal: 15),
       decoration: BoxDecoration(
-          border: Border.all(), borderRadius: BorderRadius.circular(12)),
+          border: Border.all(color: Colors.black26),
+          borderRadius: BorderRadius.circular(12)),
       child: Center(
-        child: TextField(
-          decoration: InputDecoration(
-              labelText: labelText,
-              border: InputBorder.none,
-              focusedBorder: InputBorder.none,
-              enabledBorder: InputBorder.none,
-              errorBorder: InputBorder.none,
-              disabledBorder: InputBorder.none,
-              icon: icon),
-        ),
+        child: Theme(
+            data: Theme.of(context).copyWith(
+              primaryColor: Colors.red,
+              colorScheme: Theme.of(context)
+                  .colorScheme
+                  .copyWith(secondary: Palette.primaryColor),
+            ),
+            child: TextField(
+              cursorColor: Palette.primaryColor,
+              onChanged: onChanged,
+              decoration: InputDecoration(
+                  labelText: labelText,
+                  labelStyle: const TextStyle(color: Palette.primaryColor),
+                  border: InputBorder.none,
+                  focusedBorder: InputBorder.none,
+                  enabledBorder: InputBorder.none,
+                  errorBorder: InputBorder.none,
+                  disabledBorder: InputBorder.none,
+                  icon: icon),
+            )),
       ),
     );
   }

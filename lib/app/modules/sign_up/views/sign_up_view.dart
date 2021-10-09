@@ -30,23 +30,35 @@ class SignUpView extends GetView<SignUpController> {
               const SizedBox(
                 height: 40,
               ),
-              const CustomInput(
-                  icon: FaIcon(FontAwesomeIcons.user), labelText: 'Username'),
+              CustomInput(
+                icon: const FaIcon(FontAwesomeIcons.user),
+                labelText: 'Username',
+                onChanged: (param) {},
+              ),
               const SizedBox(
                 height: 25,
               ),
-              const CustomInput(
-                  icon: FaIcon(FontAwesomeIcons.envelope), labelText: 'Email'),
+              CustomInput(
+                icon: const FaIcon(FontAwesomeIcons.envelope),
+                labelText: 'Email',
+                onChanged: (param) {},
+              ),
               const SizedBox(
                 height: 25,
               ),
-              const CustomInput(
-                  icon: FaIcon(FontAwesomeIcons.lock), labelText: 'Password'),
+              CustomInput(
+                icon: const FaIcon(FontAwesomeIcons.lock),
+                labelText: 'Password',
+                onChanged: (param) {},
+              ),
               const SizedBox(
                 height: 25,
               ),
-              const CustomInput(
-                  icon: FaIcon(FontAwesomeIcons.lock), labelText: 'Password'),
+              CustomInput(
+                icon: const FaIcon(FontAwesomeIcons.lock),
+                labelText: 'Password',
+                onChanged: (param) {},
+              ),
               const SizedBox(
                 height: 30,
               ),
