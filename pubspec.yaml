@@ -13,6 +13,7 @@ dependencies:
     sdk: flutter
   reactive_forms: ^10.6.2
   local_auth: ^1.1.8
+  battery_plus: ^2.0.1
 
 dev_dependencies: 
   flutter_lints: ^1.0.0
