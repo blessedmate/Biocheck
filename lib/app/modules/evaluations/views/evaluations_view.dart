@@ -32,14 +32,26 @@ class EvaluationsView extends GetView<EvaluationsController> {
       appBar: appbar,
       body: Column(
         children: [
-          _beginEvaluationButton(context),
-          _evaluationsList(),
+          BeginEvaluationButton(controller: controller, context: context),
+          EvaluationsList(appbar: appbar, controller: controller),
         ],
       ),
     );
   }
+}
 
-  Widget _beginEvaluationButton(BuildContext context) {
+class BeginEvaluationButton extends StatelessWidget {
+  const BeginEvaluationButton({
+    Key? key,
+    required this.controller,
+    required this.context,
+  }) : super(key: key);
+
+  final EvaluationsController controller;
+  final BuildContext context;
+
+  @override
+  Widget build(BuildContext context) {
     return Container(
       margin: const EdgeInsets.symmetric(vertical: 25, horizontal: 30),
       width: double.infinity,
@@ -59,8 +71,20 @@ class EvaluationsView extends GetView<EvaluationsController> {
       ),
     );
   }
+}
 
-  Widget _evaluationsList() {
+class EvaluationsList extends StatelessWidget {
+  const EvaluationsList({
+    Key? key,
+    required this.appbar,
+    required this.controller,
+  }) : super(key: key);
+
+  final AppBar appbar;
+  final EvaluationsController controller;
+
+  @override
+  Widget build(BuildContext context) {
     const marginBeginEvaluation = 50;
     const sizeBeginEvaluation = 65;
 
@@ -74,12 +98,22 @@ class EvaluationsView extends GetView<EvaluationsController> {
       child: ListView.builder(
         itemCount: 20,
         scrollDirection: Axis.vertical,
-        itemBuilder: (_, int index) => _evaluation(),
+        itemBuilder: (_, int index) => Evaluation(controller: controller),
       ),
     );
   }
+}
 
-  Widget _evaluation() {
+class Evaluation extends StatelessWidget {
+  const Evaluation({
+    Key? key,
+    required this.controller,
+  }) : super(key: key);
+
+  final EvaluationsController controller;
+
+  @override
+  Widget build(BuildContext context) {
     DateTime date = DateTime.now();
     String surgeryType = 'Paranasal Sinus Endoscopy';
     String location = 'Radis Gallery - Santa Cruz, CA';
@@ -89,7 +123,7 @@ class EvaluationsView extends GetView<EvaluationsController> {
         controller.previousEvaluationDetail();
       },
       child: Container(
-          height: 90,
+          height: 95,
           padding: const EdgeInsets.all(10),
           margin: const EdgeInsets.symmetric(vertical: 10, horizontal: 15),
           decoration: BoxDecoration(
@@ -102,38 +136,48 @@ class EvaluationsView extends GetView<EvaluationsController> {
                     blurRadius: 4,
                     spreadRadius: 2)
               ]),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            mainAxisAlignment: MainAxisAlignment.center,
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              Text(
-                date.toString(),
-                style:
-                    const TextStyle(color: Palette.primaryColor, fontSize: 14),
-              ),
-              const SizedBox(
-                height: 5,
-              ),
-              Text(
-                surgeryType,
-                style: const TextStyle(color: Colors.black, fontSize: 18),
-              ),
-              const SizedBox(
-                height: 5,
-              ),
-              Row(
+              Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  const Icon(
-                    Icons.location_on_outlined,
-                    color: Colors.black54,
-                    size: 16,
+                  Text(
+                    date.toString(),
+                    style: const TextStyle(
+                        color: Palette.primaryColor, fontSize: 14),
+                  ),
+                  const SizedBox(
+                    height: 5,
                   ),
                   Text(
-                    location,
-                    style: const TextStyle(color: Colors.black54, fontSize: 14),
+                    surgeryType,
+                    style: const TextStyle(color: Colors.black, fontSize: 18),
+                  ),
+                  const SizedBox(
+                    height: 5,
+                  ),
+                  Row(
+                    children: [
+                      const Icon(
+                        Icons.location_on_outlined,
+                        color: Colors.black54,
+                        size: 16,
+                      ),
+                      Text(
+                        location,
+                        style: const TextStyle(
+                            color: Colors.black54, fontSize: 14),
+                      ),
+                    ],
                   ),
                 ],
               ),
+              Obx(() => controller.incompleteEvaluation()
+                  ? const Icon(Icons.access_time,
+                      color: Colors.yellow, size: 32)
+                  : Container())
             ],
           )),
     );
