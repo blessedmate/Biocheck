@@ -31,4 +31,8 @@ class NewEvaluationController extends GetxController {
       Get.offAndToNamed(Routes.EVALUATIONS);
     }
   }
+
+  goToSectionDetail() {
+    Get.toNamed(Routes.NEW_EVALUATION_DETAIL);
+  }
 }
