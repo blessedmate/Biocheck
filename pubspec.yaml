@@ -1,0 +1,39 @@
+name: biocheck_flutter
+version: 1.0.0+1
+publish_to: none
+description: A new Flutter project.
+environment: 
+  sdk: '>=2.12.0 <3.0.0'
+
+dependencies: 
+  cupertino_icons: ^1.0.2
+  get: 4.3.8
+  font_awesome_flutter: ^9.1.0
+  flutter: 
+    sdk: flutter
+  reactive_forms: ^10.6.2
+  local_auth: ^1.1.8
+  battery_plus: ^2.0.1
+
+dev_dependencies: 
+  flutter_lints: ^1.0.0
+  flutter_test: 
+    sdk: flutter
+
+flutter: 
+  uses-material-design: true
+  fonts:
+    - family: Airbnb
+      fonts:
+        - asset: assets/fonts/AirbnbCerealLight.ttf
+          weight: 300
+        - asset: assets/fonts/AirbnbCerealMedium.ttf
+          weight: 400
+        - asset: assets/fonts/AirbnbCerealBold.ttf
+          weight: 700
+        - asset: assets/fonts/AirbnbCerealExtraBold.ttf
+          weight: 900
+  assets:
+    - assets/
+
+
