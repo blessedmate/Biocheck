@@ -8,7 +8,7 @@ class ConfigEnvironments {
   static final List<Map<String, String>> _availableEnvironments = [
     {
       'env': Environments.DEV,
-      'url': 'dev-biocheck-back-4aje8.ondigitalocean.app',
+      'url': 'anrsjt7yp9.execute-api.us-east-2.amazonaws.com/Beta',
     }
   ];
 
