@@ -1,3 +1,4 @@
+import 'package:biocheck_flutter/app/global_widgets/global_widgets.dart';
 import 'package:biocheck_flutter/app/routes/app_pages.dart';
 import 'package:biocheck_flutter/app/utils/palette.dart';
 import 'package:biocheck_flutter/app/utils/typography_styles.dart';
@@ -9,18 +10,6 @@ import '../controllers/evaluations_controller.dart';
 
 class EvaluationsView extends GetView<EvaluationsController> {
   AppBar appbar = AppBar(
-    leading: TextButton(
-      onPressed: () {},
-      child: const Icon(
-        Icons.menu,
-        color: Palette.primaryColor,
-        size: 30,
-      ),
-      style: TextButton.styleFrom(
-        primary: Colors.white,
-        elevation: 0,
-      ),
-    ),
     title: const Text(
       'BioCheck',
     ),
@@ -30,6 +19,7 @@ class EvaluationsView extends GetView<EvaluationsController> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: appbar,
+      drawer: const Menu(),
       body: Column(
         children: [
           BeginEvaluationButton(controller: controller, context: context),
