@@ -1,5 +1,6 @@
 import 'package:biocheck_flutter/app/global_widgets/controllers/main_controller.dart';
 import 'package:biocheck_flutter/app/routes/app_pages.dart';
+import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 import 'package:battery_plus/battery_plus.dart';
@@ -7,6 +8,9 @@ import 'package:battery_plus/battery_plus.dart';
 class NewEvaluationController extends GetxController {
   final finished = false.obs;
 
+  final dateController = TextEditingController();
+  final firstNameController = TextEditingController();
+  final lastNameController = TextEditingController();
   final val1 = ''.obs;
   final val2 = ''.obs;
 
@@ -15,6 +19,12 @@ class NewEvaluationController extends GetxController {
     'Yes',
     'No',
   ];
+
+  setSelectedDate(DateTime? picked) {
+    if (picked != null) {
+      dateController.text = picked.toString().split(" ")[0];
+    }
+  }
 
   showWarning(onChangeValue) {
     return onChangeValue.value == '' && finished.value;

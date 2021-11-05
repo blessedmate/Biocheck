@@ -1,3 +1,4 @@
+import 'package:biocheck_flutter/app/global_widgets/global_widgets.dart';
 import 'package:biocheck_flutter/app/utils/palette.dart';
 import 'package:biocheck_flutter/app/utils/typography_styles.dart';
 import 'package:flutter/material.dart';
@@ -18,22 +19,48 @@ class NewEvaluationView extends GetView<NewEvaluationController> {
           style: TypographyStyles.title,
         ),
       ),
-      body: Center(
-        child: SingleChildScrollView(
-          physics: const BouncingScrollPhysics(),
+      body: SingleChildScrollView(
+        physics: const BouncingScrollPhysics(),
+        child: Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 25),
           child: Column(
+            // crossAxisAlignment: CrossAxisAlignment.start,
             children: <Widget>[
-              const SizedBox(height: 10),
-              Options(
-                  controller: controller,
-                  title: 'Diagnosis',
-                  options: controller.options1,
-                  onChangeValue: controller.val1),
-              Options(
-                  controller: controller,
-                  title: 'Previous surgery',
-                  options: controller.options2,
-                  onChangeValue: controller.val2),
+              const SizedBox(height: 20),
+              CustomInput(
+                icon: const Icon(Icons.date_range),
+                readOnly: true,
+                labelText: 'Evaluation due date',
+                textController: controller.dateController,
+                onTap: () => _selectDate(),
+              ),
+              const SizedBox(height: 20),
+              const Text('Patient\'s Info', style: TypographyStyles.subtitle),
+              const SizedBox(height: 20),
+              CustomInput(
+                icon: const SizedBox(),
+                labelText: 'First name',
+                textController: controller.firstNameController,
+              ),
+              const SizedBox(height: 20),
+              CustomInput(
+                icon: const SizedBox(),
+                labelText: 'Last name',
+                textController: controller.lastNameController,
+              ),
+
+              // TODO: ------- THIS GOES INTO NEW_EVAL_DETAIL -----------------
+              // Options(
+              //     controller: controller,
+              //     title: 'Diagnosis',
+              //     options: controller.options1,
+              //     onChangeValue: controller.val1),
+              // Options(
+              //     controller: controller,
+              //     title: 'Previous surgery',
+              //     options: controller.options2,
+              //     onChangeValue: controller.val2),
+              const SizedBox(height: 30),
               SectionsList(controller: controller),
               SaveAndPredictButton(controller: controller),
             ],
@@ -42,8 +69,19 @@ class NewEvaluationView extends GetView<NewEvaluationController> {
       ),
     );
   }
+
+  void _selectDate() async {
+    DateTime? picked = await showDatePicker(
+        context: Get.context!,
+        initialDate: DateTime.now(),
+        firstDate: DateTime(2018),
+        lastDate: DateTime(2025));
+
+    controller.setSelectedDate(picked);
+  }
 }
 
+// TODO: ------- THIS GOES INTO NEW_EVAL_DETAIL -----------------
 class Options extends StatelessWidget {
   const Options({
     Key? key,
@@ -149,7 +187,7 @@ class Section extends StatelessWidget {
       onTap: () => controller.goToSectionDetail(),
       child: Container(
         height: 60,
-        margin: const EdgeInsets.symmetric(horizontal: 25, vertical: 10),
+        margin: const EdgeInsets.symmetric(vertical: 10),
         padding: const EdgeInsets.symmetric(horizontal: 20),
         decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(10),
@@ -189,7 +227,7 @@ class SaveAndPredictButton extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      margin: const EdgeInsets.symmetric(vertical: 25, horizontal: 30),
+      margin: const EdgeInsets.symmetric(vertical: 25),
       width: double.infinity,
       height: 65,
       child: ElevatedButton(
