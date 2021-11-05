@@ -57,7 +57,7 @@ class NewEvaluationController extends GetxController {
     if (dueDate != '' && firstName != '' && lastName != '') {
       final Response response =
           await provider.uploadEvaluation(firstName, lastName, dueDate);
-      print(response.statusCode);
+      print(response.body);
       Get.offAndToNamed(Routes.EVALUATIONS);
     }
     // TODO: ------- THIS GOES INTO NEW_EVAL_DETAIL -----------------
