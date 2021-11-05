@@ -25,8 +25,10 @@ class NewEvaluationView extends GetView<NewEvaluationController> {
           padding: const EdgeInsets.symmetric(horizontal: 25),
           child: Column(
             // crossAxisAlignment: CrossAxisAlignment.start,
-            children: <Widget>[
+            children: [
               const SizedBox(height: 20),
+
+              // Date field
               CustomInput(
                 icon: const Icon(Icons.date_range),
                 readOnly: true,
@@ -34,20 +36,40 @@ class NewEvaluationView extends GetView<NewEvaluationController> {
                 textController: controller.dateController,
                 onTap: () => _selectDate(),
               ),
+              GetBuilder<NewEvaluationController>(
+                  builder: (_) =>
+                      controller.showWarning(controller.dateController)
+                          ? _warningText()
+                          : Container()),
               const SizedBox(height: 20),
+
               const Text('Patient\'s Info', style: TypographyStyles.subtitle),
               const SizedBox(height: 20),
+
+              // First name field
               CustomInput(
                 icon: const SizedBox(),
                 labelText: 'First name',
                 textController: controller.firstNameController,
               ),
+              GetBuilder<NewEvaluationController>(
+                  builder: (_) =>
+                      controller.showWarning(controller.firstNameController)
+                          ? _warningText()
+                          : Container()),
               const SizedBox(height: 20),
+
+              // Last name field
               CustomInput(
                 icon: const SizedBox(),
                 labelText: 'Last name',
                 textController: controller.lastNameController,
               ),
+              GetBuilder<NewEvaluationController>(
+                  builder: (_) =>
+                      controller.showWarning(controller.lastNameController)
+                          ? _warningText()
+                          : Container()),
 
               // TODO: ------- THIS GOES INTO NEW_EVAL_DETAIL -----------------
               // Options(
@@ -67,6 +89,18 @@ class NewEvaluationView extends GetView<NewEvaluationController> {
           ),
         ),
       ),
+    );
+  }
+
+  Column _warningText() {
+    return Column(
+      children: const [
+        Text(
+          'You must select an option',
+          style: TypographyStyles.warning,
+        ),
+        SizedBox(height: 10)
+      ],
     );
   }
 

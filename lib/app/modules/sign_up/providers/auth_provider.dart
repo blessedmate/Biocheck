@@ -5,7 +5,7 @@ class AuthProvider extends GetConnect {
   final url = ConfigEnvironments.getUrl();
 
   signUp(String email, String password) async {
-    final uri = Uri.https(url, 'users');
+    final uri = Uri.https(url, 'Beta/users');
     final body = {'email': email, 'password': password};
     return await post(uri.toString(), body);
   }
