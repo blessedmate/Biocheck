@@ -19,22 +19,25 @@ class NewEvaluationView extends GetView<NewEvaluationController> {
         ),
       ),
       body: Center(
-        child: Column(
-          children: <Widget>[
-            const SizedBox(height: 10),
-            Options(
-                controller: controller,
-                title: 'Diagnosis',
-                options: controller.options1,
-                onChangeValue: controller.val1),
-            Options(
-                controller: controller,
-                title: 'Previous surgery',
-                options: controller.options2,
-                onChangeValue: controller.val2),
-            const SectionsList(),
-            SaveAndPredictButton(controller: controller),
-          ],
+        child: SingleChildScrollView(
+          physics: const BouncingScrollPhysics(),
+          child: Column(
+            children: <Widget>[
+              const SizedBox(height: 10),
+              Options(
+                  controller: controller,
+                  title: 'Diagnosis',
+                  options: controller.options1,
+                  onChangeValue: controller.val1),
+              Options(
+                  controller: controller,
+                  title: 'Previous surgery',
+                  options: controller.options2,
+                  onChangeValue: controller.val2),
+              SectionsList(controller: controller),
+              SaveAndPredictButton(controller: controller),
+            ],
+          ),
         ),
       ),
     );
@@ -112,7 +115,8 @@ class Options extends StatelessWidget {
 }
 
 class SectionsList extends StatelessWidget {
-  const SectionsList({Key? key}) : super(key: key);
+  const SectionsList({Key? key, required this.controller}) : super(key: key);
+  final NewEvaluationController controller;
 
   @override
   Widget build(BuildContext context) {
@@ -122,7 +126,8 @@ class SectionsList extends StatelessWidget {
         physics: const BouncingScrollPhysics(),
         itemCount: 4,
         scrollDirection: Axis.vertical,
-        itemBuilder: (_, index) => const Section(title: 'Axial'),
+        itemBuilder: (_, index) =>
+            Section(title: 'Axial', controller: controller),
       ),
     );
   }
@@ -132,36 +137,42 @@ class Section extends StatelessWidget {
   const Section({
     Key? key,
     required this.title,
+    required this.controller,
   }) : super(key: key);
 
   final String title;
+  final NewEvaluationController controller;
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      height: 60,
-      margin: const EdgeInsets.symmetric(horizontal: 25, vertical: 10),
-      padding: const EdgeInsets.symmetric(horizontal: 20),
-      decoration: BoxDecoration(
-        borderRadius: BorderRadius.circular(10),
-        color: Colors.white,
-        boxShadow: const [
-          BoxShadow(
-              color: Colors.white10,
-              offset: Offset(0, 0),
-              blurRadius: 4,
-              spreadRadius: 1)
-        ],
-      ),
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-        children: [
-          Text(
-            title,
-            style: TypographyStyles.subtitle,
-          ),
-          const Icon(Icons.check_circle_outline, color: Palette.secondaryColor),
-        ],
+    return GestureDetector(
+      onTap: () => controller.goToSectionDetail(),
+      child: Container(
+        height: 60,
+        margin: const EdgeInsets.symmetric(horizontal: 25, vertical: 10),
+        padding: const EdgeInsets.symmetric(horizontal: 20),
+        decoration: BoxDecoration(
+          borderRadius: BorderRadius.circular(10),
+          color: Colors.white,
+          boxShadow: const [
+            BoxShadow(
+                color: Colors.white10,
+                offset: Offset(0, 0),
+                blurRadius: 4,
+                spreadRadius: 1)
+          ],
+        ),
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [
+            Text(
+              title,
+              style: TypographyStyles.subtitle,
+            ),
+            const Icon(Icons.check_circle_outline,
+                color: Palette.secondaryColor),
+          ],
+        ),
       ),
     );
   }
