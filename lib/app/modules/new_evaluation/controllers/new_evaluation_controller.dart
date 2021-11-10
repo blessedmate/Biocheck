@@ -33,7 +33,8 @@ class NewEvaluationController extends GetxController {
 
     finished.value = true;
     if (val.value != '' && vale.value != '') {
-      Get.offAndToNamed(Routes.EVALUATIONS);
+      Get.back();
+      Get.back();
     }
   }
 }

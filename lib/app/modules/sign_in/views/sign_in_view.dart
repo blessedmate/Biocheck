@@ -72,32 +72,6 @@ class SignInView extends GetView<SignInController> {
                               ),
                             )
                           : Container()),
-
-                  // Row(
-                  //   children: [
-                  //     Row(
-                  //       children: [
-                  //         SizedBox(
-                  //           height: 30,
-                  //           width: 35,
-                  //           child: Transform.scale(
-                  //             transformHitTests: false,
-                  //             scale: .6,
-                  //             child: CupertinoSwitch(
-                  //               value: false,
-                  //               onChanged: (value) {},
-                  //               activeColor: Colors.green,
-                  //             ),
-                  //           ),
-                  //         ),
-                  //         const SizedBox(
-                  //           width: 10,
-                  //         ),
-                  //         const Text('Remember me')
-                  //       ],
-                  //     )
-                  //   ],
-                  // ),
                   const SizedBox(
                     height: 10,
                   ),
