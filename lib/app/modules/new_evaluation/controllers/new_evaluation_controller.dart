@@ -7,18 +7,13 @@ import 'package:battery_plus/battery_plus.dart';
 class NewEvaluationController extends GetxController {
   final finished = false.obs;
 
-  final val = ''.obs;
-  final vale = ''.obs;
+  final val1 = ''.obs;
+  final val2 = ''.obs;
 
-  List<String> options = ['Crswnp', 'JAIS', 'Hausa', 'Other'];
-  List<String> optionsb = [
-    'Crswnd',
-    'Spfiax',
-    'RRoxc',
-    'TTreT',
-    'Pobpy',
-    'LoaYY',
-    'MFghSC'
+  List<String> options1 = ['CRSwNP', 'AFRS', 'CRSwDD', 'Other'];
+  List<String> options2 = [
+    'Yes',
+    'No',
   ];
 
   showWarning(onChangeValue) {
@@ -32,9 +27,8 @@ class NewEvaluationController extends GetxController {
     print(finalBattery);
 
     finished.value = true;
-    if (val.value != '' && vale.value != '') {
-      Get.back();
-      Get.back();
+    if (val1.value != '' && val2.value != '') {
+      Get.offAndToNamed(Routes.EVALUATIONS);
     }
   }
 }

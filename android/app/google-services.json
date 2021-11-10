@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "301721370119",
+    "project_id": "biocheck-d5bcc",
+    "storage_bucket": "biocheck-d5bcc.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:301721370119:android:107b71de516e0a257bf4a2",
+        "android_client_info": {
+          "package_name": "com.uniandes.biocheck"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "301721370119-6kc6p7ec2d3h3gp573n0flfk1mbllb9f.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAwicAkuusBV7pO_57eTbWldU7r8l_xels"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "301721370119-6kc6p7ec2d3h3gp573n0flfk1mbllb9f.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

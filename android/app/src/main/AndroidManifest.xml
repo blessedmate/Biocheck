@@ -1,5 +1,5 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.biocheck.flutter.biocheck_flutter">
+    package="com.uniandes.biocheck">
      <uses-permission android:name="android.permission.USE_FINGERPRINT"/>
    <application
         android:label="biocheck_flutter"

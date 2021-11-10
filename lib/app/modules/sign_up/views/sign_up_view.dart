@@ -55,11 +55,11 @@ class SignUpView extends GetView<SignUpController> {
               const SizedBox(
                 height: 25,
               ),
-              CustomInput(
-                icon: const FaIcon(FontAwesomeIcons.lock),
-                labelText: 'Confirm password',
-                onChanged: (val) => controller.confirmPassword = val,
-              ),
+              // CustomInput(
+              //   icon: const FaIcon(FontAwesomeIcons.lock),
+              //   labelText: 'Confirm password',
+              //   onChanged: (val) => controller.confirmPassword = val,
+              // ),
               const SizedBox(
                 height: 30,
               ),
