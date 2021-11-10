@@ -11,6 +11,10 @@ class SignUpController extends GetxController {
   bool get error => _error.value;
   set error(bool newValue) => _error.value = newValue;
 
+  final _name = ''.obs;
+  String get name => _name.value;
+  set name(String newValue) => _name.value = newValue;
+
   final _username = ''.obs;
   String get username => _username.value;
   set username(String newValue) => _username.value = newValue;
@@ -19,13 +23,13 @@ class SignUpController extends GetxController {
   String get email => _email.value;
   set email(String newValue) => _email.value = newValue;
 
+  final _institution = ''.obs;
+  String get institution => _institution.value;
+  set institution(String newValue) => _institution.value = newValue;
+
   final _password = ''.obs;
   String get password => _password.value;
   set password(String newValue) => _password.value = newValue;
-
-  final _confirmPassword = ''.obs;
-  String get confirmPassword => _confirmPassword.value;
-  set confirmPassword(String newValue) => _confirmPassword.value = newValue;
 
   String message = '';
 
@@ -41,15 +45,13 @@ class SignUpController extends GetxController {
     } else if (email == '') {
       error = true;
       message = 'Email can\'t be empty';
-    } else if (password == '' || confirmPassword == '') {
+    } else if (password == '') {
       error = true;
       message = 'Password can\'t be empty';
-    } else if (password != confirmPassword) {
-      error = true;
-      message = 'Passwords do not match';
     }
     if (!error) {
-      Response resp = await provider.signUp(email, password);
+      Response resp =
+          await provider.signUp(name, email, username, password, institution);
       if (resp.statusCode == 201) {
         Get.offAndToNamed(Routes.EVALUATIONS);
       } else {
