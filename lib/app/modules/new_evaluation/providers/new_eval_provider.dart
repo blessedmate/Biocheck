@@ -1,17 +1,18 @@
+import 'package:biocheck_flutter/app/data/models/models.dart';
 import 'package:biocheck_flutter/config.dart';
 import 'package:get/get.dart';
 
 class NewEvaluationProvider extends GetConnect {
   final url = ConfigEnvironments.getUrl();
 
-  uploadEvaluation(String firstName, String lastName, String dueDate) async {
+  uploadEvaluation(Evaluation evaluation) async {
     final uri = Uri.https(url, 'Beta/forms');
     final body = {
-      "user_id": 37,
-      "patient_firstName": firstName,
-      "patient_lastName": lastName,
-      "due_date": dueDate,
-      "information": {"name": "Cardio", "bpm": 120}
+      "user_id": evaluation.userId,
+      "patient_firstName": evaluation.patientFirstName,
+      "patient_lastName": evaluation.patientLastName,
+      "due_date": evaluation.dueDate,
+      "information": {"name": "Tonsillectomy"}
     };
     final headers = {
       "access-token": '',

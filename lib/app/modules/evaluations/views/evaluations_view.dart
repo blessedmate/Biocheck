@@ -1,5 +1,4 @@
 import 'package:biocheck_flutter/app/global_widgets/global_widgets.dart';
-import 'package:biocheck_flutter/app/routes/app_pages.dart';
 import 'package:biocheck_flutter/app/utils/palette.dart';
 import 'package:biocheck_flutter/app/utils/typography_styles.dart';
 import 'package:flutter/material.dart';
@@ -75,6 +74,8 @@ class EvaluationsList extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    // TODO: Show evaluations from backend
+    controller.getUserEvaluations();
     const marginBeginEvaluation = 50;
     const sizeBeginEvaluation = 65;
 
