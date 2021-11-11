@@ -1,7 +1,7 @@
 import 'package:biocheck_flutter/config.dart';
 import 'package:get/get.dart';
 
-class EvaluationsProvider extends GetConnect {
+class TemplatesProvider extends GetConnect {
   final url = ConfigEnvironments.getUrl();
 
   getEvaluations() async {

@@ -1,5 +1,5 @@
+import 'package:biocheck_flutter/app/data/models/models.dart';
 import 'package:biocheck_flutter/app/global_widgets/global_widgets.dart';
-import 'package:biocheck_flutter/app/routes/app_pages.dart';
 import 'package:biocheck_flutter/app/utils/palette.dart';
 import 'package:biocheck_flutter/app/utils/typography_styles.dart';
 import 'package:flutter/material.dart';
@@ -14,7 +14,6 @@ class EvaluationsView extends GetView<EvaluationsController> {
       'BioCheck',
     ),
   );
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -23,7 +22,15 @@ class EvaluationsView extends GetView<EvaluationsController> {
       body: Column(
         children: [
           BeginEvaluationButton(controller: controller, context: context),
-          EvaluationsList(appbar: appbar, controller: controller),
+          controller.obx(
+              (evaluations) =>
+                  EvaluationsList(appbar: appbar, controller: controller),
+              onLoading: const Center(
+                child: CircularProgressIndicator(),
+              ),
+              onEmpty: const Center(
+                child: Text('No previous evaluations'),
+              )),
         ],
       ),
     );
@@ -75,6 +82,7 @@ class EvaluationsList extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final List<Evaluation> evaluationsList = controller.evaluationsList;
     const marginBeginEvaluation = 50;
     const sizeBeginEvaluation = 65;
 
@@ -86,26 +94,29 @@ class EvaluationsList extends StatelessWidget {
           MediaQuery.of(Get.context!).padding.top -
           appbar.preferredSize.height,
       child: ListView.builder(
-        itemCount: 20,
+        itemCount: evaluationsList.length,
         scrollDirection: Axis.vertical,
-        itemBuilder: (_, int index) => Evaluation(controller: controller),
+        itemBuilder: (_, int index) => EvaluationCard(
+          controller: controller,
+          evaluation: evaluationsList[index],
+        ),
       ),
     );
   }
 }
 
-class Evaluation extends StatelessWidget {
-  const Evaluation({
+class EvaluationCard extends StatelessWidget {
+  const EvaluationCard({
     Key? key,
     required this.controller,
+    required this.evaluation,
   }) : super(key: key);
 
   final EvaluationsController controller;
+  final Evaluation evaluation;
 
   @override
   Widget build(BuildContext context) {
-    DateTime date = DateTime.now();
-    String surgeryType = 'Paranasal Sinus Endoscopy';
     String location = 'Radis Gallery - Santa Cruz, CA';
 
     return GestureDetector(
@@ -134,7 +145,7 @@ class Evaluation extends StatelessWidget {
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   Text(
-                    date.toString(),
+                    evaluation.dueDate,
                     style: const TextStyle(
                         color: Palette.primaryColor, fontSize: 14),
                   ),
@@ -142,7 +153,7 @@ class Evaluation extends StatelessWidget {
                     height: 5,
                   ),
                   Text(
-                    surgeryType,
+                    evaluation.template.name,
                     style: const TextStyle(color: Colors.black, fontSize: 18),
                   ),
                   const SizedBox(
