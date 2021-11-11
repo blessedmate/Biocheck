@@ -1,4 +1,4 @@
-package com.biocheck.flutter.biocheck_flutter
+package com.uniandes.biocheck
 
 import io.flutter.embedding.android.FlutterFragmentActivity
 import io.flutter.plugins.GeneratedPluginRegistrant

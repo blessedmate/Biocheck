@@ -4,13 +4,14 @@ import 'package:biocheck_flutter/app/modules/new_evaluation/providers/new_eval_p
 import 'package:biocheck_flutter/app/routes/app_pages.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-
+import 'package:location/location.dart';
 import 'package:battery_plus/battery_plus.dart';
 
 class NewEvaluationController extends GetxController {
   final provider = NewEvaluationProvider();
 
   final finished = false.obs;
+  Location location = Location();
 
   final dateController = TextEditingController();
   final firstNameController = TextEditingController();
@@ -37,16 +38,33 @@ class NewEvaluationController extends GetxController {
     return textController.text == '' && finished.value;
   }
 
-// TODO: ------- THIS GOES INTO NEW_EVAL_DETAIL -----------------
-  // showWarning(onChangeValue) {
-  //   return onChangeValue.value == '' && finished.value;
-  // }
+  locationIsEnabled() async {
+    bool _serviceEnabled;
+    PermissionStatus _permissionGranted;
+
+    _serviceEnabled = await location.serviceEnabled();
+    if (!_serviceEnabled) {
+      _serviceEnabled = await location.requestService();
+      if (!_serviceEnabled) {
+        return;
+      }
+    }
+
+    _permissionGranted = await location.hasPermission();
+    if (_permissionGranted == PermissionStatus.denied) {
+      _permissionGranted = await location.requestPermission();
+      if (_permissionGranted != PermissionStatus.granted) {
+        return;
+      }
+    }
+  }
 
   submit() async {
     final mainController = Get.find<MainController>();
     print(mainController.startBatteryLevel);
     int finalBattery = await Battery().batteryLevel;
     print('Battery = $finalBattery');
+    print(await location.getLocation());
 
     finished.value = true;
     update();

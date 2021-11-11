@@ -47,8 +47,8 @@ class SignInView extends GetView<SignInController> {
                   ),
                   CustomInput(
                     icon: const FaIcon(FontAwesomeIcons.envelope),
-                    labelText: 'Email',
-                    onChanged: (val) => controller.email = val,
+                    labelText: 'Username',
+                    onChanged: (val) => controller.username = val,
                   ),
                   const SizedBox(
                     height: 25,
@@ -72,32 +72,6 @@ class SignInView extends GetView<SignInController> {
                               ),
                             )
                           : Container()),
-
-                  // Row(
-                  //   children: [
-                  //     Row(
-                  //       children: [
-                  //         SizedBox(
-                  //           height: 30,
-                  //           width: 35,
-                  //           child: Transform.scale(
-                  //             transformHitTests: false,
-                  //             scale: .6,
-                  //             child: CupertinoSwitch(
-                  //               value: false,
-                  //               onChanged: (value) {},
-                  //               activeColor: Colors.green,
-                  //             ),
-                  //           ),
-                  //         ),
-                  //         const SizedBox(
-                  //           width: 10,
-                  //         ),
-                  //         const Text('Remember me')
-                  //       ],
-                  //     )
-                  //   ],
-                  // ),
                   const SizedBox(
                     height: 10,
                   ),
@@ -130,7 +104,6 @@ class SignInView extends GetView<SignInController> {
                     ),
                   )),
                   const SizedBox(height: 15),
-
                   Center(
                     child: GestureDetector(
                       onTap: () {},
