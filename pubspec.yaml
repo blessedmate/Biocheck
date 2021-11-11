@@ -15,6 +15,8 @@ dependencies:
   local_auth: ^1.1.8
   battery_plus: ^2.0.1
   firebase_core: ^1.10.0
+  location: ^4.2.0
+  get_storage: ^2.0.3
 
 
 dev_dependencies: 
