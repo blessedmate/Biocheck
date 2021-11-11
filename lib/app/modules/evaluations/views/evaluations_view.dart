@@ -18,7 +18,7 @@ class EvaluationsView extends GetView<EvaluationsController> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: appbar,
-      drawer: const Menu(),
+      drawer: Menu(),
       body: Column(
         children: [
           BeginEvaluationButton(controller: controller, context: context),

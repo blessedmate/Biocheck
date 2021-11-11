@@ -1,10 +1,19 @@
-import 'package:biocheck_flutter/app/utils/palette.dart';
+import 'package:biocheck_flutter/app/routes/app_pages.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+import 'package:get_storage/get_storage.dart';
 
 class Menu extends StatelessWidget {
-  const Menu({
+  Menu({
     Key? key,
   }) : super(key: key);
+  final box = GetStorage();
+
+  handleSignOut() {
+    box.remove('token');
+    box.remove('userId');
+    Get.offAllNamed(Routes.SIGN_IN);
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -50,7 +59,7 @@ class Menu extends StatelessWidget {
             const Divider(thickness: 2),
             ListTile(
               title: const Text('Log out'),
-              onTap: () {},
+              onTap: () => handleSignOut(),
             ),
           ],
         ),
