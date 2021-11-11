@@ -47,8 +47,8 @@ class SignInView extends GetView<SignInController> {
                   ),
                   CustomInput(
                     icon: const FaIcon(FontAwesomeIcons.envelope),
-                    labelText: 'Email',
-                    onChanged: (val) => controller.email = val,
+                    labelText: 'Username',
+                    onChanged: (val) => controller.username = val,
                   ),
                   const SizedBox(
                     height: 25,
@@ -104,7 +104,6 @@ class SignInView extends GetView<SignInController> {
                     ),
                   )),
                   const SizedBox(height: 15),
-
                   Center(
                     child: GestureDetector(
                       onTap: () {},
