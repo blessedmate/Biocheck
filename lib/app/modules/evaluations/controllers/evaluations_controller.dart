@@ -3,10 +3,17 @@ import 'package:biocheck_flutter/app/modules/evaluations/providers/evaluations_p
 import 'package:biocheck_flutter/app/routes/app_pages.dart';
 import 'package:get/get.dart';
 
-class EvaluationsController extends GetxController {
+class EvaluationsController extends GetxController
+    with StateMixin<List<Evaluation>> {
   final provider = EvaluationsProvider();
   final List<Evaluation> evaluationsList = [];
   final _finished = true.obs;
+
+  @override
+  void onInit() {
+    super.onInit();
+    getUserEvaluations();
+  }
 
   beginEvaluation() {
     Get.toNamed(Routes.BEGIN_EVALUATION);
@@ -20,17 +27,22 @@ class EvaluationsController extends GetxController {
     return _finished.value;
   }
 
+  // Requests the list of evaluations
   getUserEvaluations() async {
-    // Requests the list of evaluations
-    final Response response = await provider.getEvaluations();
+    change(null, status: RxStatus.loading());
 
+    final Response response = await provider.getEvaluations();
+    evaluationsList.clear();
     response.body.forEach((value) {
       final currentEval = Evaluation.fromMap(value);
       evaluationsList.add(currentEval);
     });
-    // TODO: Return evaluations and display dynamically
+    if (evaluationsList.isEmpty) {
+      change(evaluationsList, status: RxStatus.empty());
+    } else {
+      change(evaluationsList, status: RxStatus.success());
+    }
 
-    print(response.statusCode);
-    print(response.body);
+    // TODO: Save to SQLite
   }
 }

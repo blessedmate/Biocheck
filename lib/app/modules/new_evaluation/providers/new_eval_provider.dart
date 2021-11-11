@@ -12,10 +12,11 @@ class NewEvaluationProvider extends GetConnect {
       "patient_firstName": evaluation.patientFirstName,
       "patient_lastName": evaluation.patientLastName,
       "due_date": evaluation.dueDate,
-      "information": {"name": "Tonsillectomy"}
+      "information": {"name": "Adenoidectomy"}
     };
     final headers = {
-      "access-token": '',
+      "access-token":
+          'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJjaGVjayI6dHJ1ZSwiaWF0IjoxNjM2NTA5MjIyfQ.Tx3hS2NBDvMbNUmY-H3-otM5QfZwWPAv08jIjO4T644',
     };
     return await post(uri.toString(), body, headers: headers);
   }

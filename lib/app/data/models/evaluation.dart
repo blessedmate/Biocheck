@@ -13,7 +13,7 @@ class Evaluation {
     required this.userId,
     required this.patientFirstName,
     required this.patientLastName,
-    this.dueDate,
+    required this.dueDate,
     required this.template,
     this.response,
   });
@@ -22,7 +22,7 @@ class Evaluation {
   int userId;
   String patientFirstName;
   String patientLastName;
-  String? dueDate;
+  String dueDate;
   EvaluationTemplate template;
   EvalResponse? response;
 
