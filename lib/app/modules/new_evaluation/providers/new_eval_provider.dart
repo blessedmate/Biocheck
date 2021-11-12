@@ -5,7 +5,7 @@ import 'package:get/get.dart';
 class NewEvaluationProvider extends GetConnect {
   final url = ConfigEnvironments.getUrl();
 
-  uploadEvaluation(Evaluation evaluation) async {
+  uploadEvaluation(Evaluation evaluation, String token) async {
     final uri = Uri.https(url, 'Beta/forms');
     final body = {
       "user_id": evaluation.userId,
@@ -15,8 +15,7 @@ class NewEvaluationProvider extends GetConnect {
       "information": {"name": "Adenoidectomy"}
     };
     final headers = {
-      "access-token":
-          'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJjaGVjayI6dHJ1ZSwiaWF0IjoxNjM2NTA5MjIyfQ.Tx3hS2NBDvMbNUmY-H3-otM5QfZwWPAv08jIjO4T644',
+      "access-token": token,
     };
     return await post(uri.toString(), body, headers: headers);
   }

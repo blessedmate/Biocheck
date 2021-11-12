@@ -31,16 +31,11 @@ class SQLiteProvider {
       version: 1,
       onOpen: (db) {},
       onCreate: (Database db, int version) async {
-        // TODO: COMPLETE DATA MODEL
         await db.execute('''
         CREATE TABLE Evaluations(
-          id INTEGER PRIMARY KEY,
+          id TEXT PRIMARY KEY,
           userId INTEGER,
-          patientFirstName TEXT,
-          patientLastName TEXT,
-          dueDate TEXT,
-          template ?????,
-          evalResponse ?????,
+          json TEXT
         )
       ''');
       },
@@ -52,7 +47,40 @@ class SQLiteProvider {
     final db = await database;
     final response = await db.query('Evaluations');
     return response.isNotEmpty
-        ? response.map((e) => Evaluation.fromMap(e)).toList()
+        ? response
+            .map((e) => Evaluation.fromJson(e['json'].toString()))
+            .toList()
         : null;
+  }
+
+  // CREATE EVALUATION
+  Future<int> saveEvaluation(Evaluation eval) async {
+    final db = await database;
+    final res = await db.insert(
+      'Evaluations',
+      {
+        'id': eval.id,
+        'userId': eval.userId,
+        'json': eval.toJson(),
+      },
+    );
+    return res;
+  }
+
+  // CREATE MANY EVALUATIONS
+  Future<int> saveEvaluations(List<Evaluation> evaluations) async {
+    final db = await database;
+    int res = 1;
+
+    // TODO: insert all evaluations at once
+    for (var e in evaluations) {
+      res = await db.insert('Evaluations', {
+        'id': e.id,
+        'userId': e.userId,
+        'json': e.toJson(),
+      });
+    }
+
+    return res;
   }
 }
