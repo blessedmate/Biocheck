@@ -24,7 +24,7 @@ class SQLiteProvider {
     // Path of database location
     Directory documentsDirectory = await getApplicationDocumentsDirectory();
     final path = join(documentsDirectory.path, 'EvaluationsDB.db');
-
+    print('path $path');
     // Database creation
     return await openDatabase(
       path,
