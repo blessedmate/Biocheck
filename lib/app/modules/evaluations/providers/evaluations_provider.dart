@@ -3,14 +3,12 @@ import 'package:get/get.dart';
 
 class EvaluationsProvider extends GetConnect {
   final url = ConfigEnvironments.getUrl();
-  // TODO: Use real user id
-  final userId = 37;
 
-  getEvaluations() async {
+  // Gets evaluations from user with id=userId
+  getEvaluations(int userId, String token) async {
     final uri = Uri.https(url, 'Beta/forms/user/$userId');
     final headers = {
-      "access-token":
-          'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJjaGVjayI6dHJ1ZSwiaWF0IjoxNjM2NTA5MjIyfQ.Tx3hS2NBDvMbNUmY-H3-otM5QfZwWPAv08jIjO4T644',
+      "access-token": token,
     };
     final response = await get(uri.toString(), headers: headers);
     return response;

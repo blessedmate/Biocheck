@@ -71,17 +71,6 @@ class NewEvaluationView extends GetView<NewEvaluationController> {
                           ? _warningText()
                           : Container()),
 
-              // TODO: ------- THIS GOES INTO NEW_EVAL_DETAIL -----------------
-              // Options(
-              //     controller: controller,
-              //     title: 'Diagnosis',
-              //     options: controller.options1,
-              //     onChangeValue: controller.val1),
-              // Options(
-              //     controller: controller,
-              //     title: 'Previous surgery',
-              //     options: controller.options2,
-              //     onChangeValue: controller.val2),
               const SizedBox(height: 30),
               SectionsList(controller: controller),
               SaveAndPredictButton(controller: controller),
@@ -112,77 +101,6 @@ class NewEvaluationView extends GetView<NewEvaluationController> {
         lastDate: DateTime(2025));
 
     controller.setSelectedDate(picked);
-  }
-}
-
-// TODO: ------- THIS GOES INTO NEW_EVAL_DETAIL -----------------
-class Options extends StatelessWidget {
-  const Options({
-    Key? key,
-    required this.controller,
-    required this.title,
-    required this.options,
-    required this.onChangeValue,
-  }) : super(key: key);
-
-  final NewEvaluationController controller;
-  final String title;
-  final List<String> options;
-  final onChangeValue;
-
-  @override
-  Widget build(BuildContext context) {
-    return Column(
-      children: [
-        // TODO: Align title left
-        Text(title, style: TypographyStyles.subtitle),
-        SizedBox(
-          height: (options.length.isOdd)
-              ? 70 * (options.length + 1) / 2
-              : 70 * options.length / 2,
-          child: GridView.builder(
-              physics: const NeverScrollableScrollPhysics(),
-              itemCount: options.length,
-              gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-                crossAxisCount: 2,
-                childAspectRatio: (3 / 1),
-                crossAxisSpacing: 5,
-                mainAxisSpacing: 1,
-              ),
-              itemBuilder: (context, index) => Obx(() => SizedBox(
-                    width: Get.width * 0.4,
-                    height: 40,
-                    child: Row(
-                      children: [
-                        Radio(
-                          activeColor: Palette.secondaryColor,
-                          value: options[index],
-                          groupValue: onChangeValue.value,
-                          onChanged: (value) {
-                            onChangeValue.value = value as String;
-                          },
-                        ),
-                        Text(
-                          options[index],
-                          style: TypographyStyles.evaluationOptions,
-                        )
-                      ],
-                    ),
-                  ))),
-        ),
-        Obx(() => controller.showWarning(onChangeValue)
-            ? Column(
-                children: const [
-                  Text(
-                    'You must select an option',
-                    style: TypographyStyles.warning,
-                  ),
-                  SizedBox(height: 10)
-                ],
-              )
-            : Container())
-      ],
-    );
   }
 }
 

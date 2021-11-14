@@ -7,6 +7,7 @@ import 'package:get_storage/get_storage.dart';
 import 'package:get/get.dart';
 
 import 'app/global_widgets/controllers/main_controller.dart';
+import 'app/providers/sqlite_provider.dart';
 import 'app/routes/app_pages.dart';
 
 void main() async {
@@ -14,7 +15,7 @@ void main() async {
   await Firebase.initializeApp();
   await GetStorage.init();
   final box = GetStorage();
-
+  SQLiteProvider.db.initDB();
   Get.put(MainController());
   final token = box.read('token');
   print(token);
