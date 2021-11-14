@@ -2,6 +2,7 @@ import 'package:biocheck_flutter/app/data/models/models.dart';
 import 'package:biocheck_flutter/app/global_widgets/global_widgets.dart';
 import 'package:biocheck_flutter/app/utils/palette.dart';
 import 'package:biocheck_flutter/app/utils/typography_styles.dart';
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 
 import 'package:get/get.dart';
@@ -35,7 +36,12 @@ class EvaluationsView extends GetView<EvaluationsController> {
         ],
       ),
       floatingActionButton: FloatingActionButton(
-        child: const Icon(Icons.update_outlined),
+        child: CachedNetworkImage(
+          imageUrl:
+              'https://res.cloudinary.com/dkwnvvjcs/image/upload/v1636933192/biocheck/sync_gfzpag.png',
+          height: 30,
+          fadeInDuration: const Duration(milliseconds: 0),
+        ),
         backgroundColor: Palette.primaryColor,
         onPressed: () {
           controller.sendPendingEvaluations();

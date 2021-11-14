@@ -1,4 +1,5 @@
 import 'package:biocheck_flutter/app/routes/app_pages.dart';
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
@@ -23,20 +24,11 @@ class Menu extends StatelessWidget {
           children: [
             DrawerHeader(
               margin: const EdgeInsets.symmetric(vertical: 20),
-              child: Container(),
-              decoration: const BoxDecoration(
-                image: DecorationImage(
-                  image: AssetImage('assets/logo.png'),
-                  fit: BoxFit.contain,
-                ),
-                // gradient: LinearGradient(
-                //   begin: Alignment.topCenter,
-                //   end: Alignment.bottomCenter,
-                //   colors: [
-                //     Palette.primaryColor.withOpacity(0.1),
-                //     Colors.white,
-                //   ],
-                // ),
+              child: CachedNetworkImage(
+                imageUrl:
+                    'https://res.cloudinary.com/dkwnvvjcs/image/upload/v1636933892/biocheck/logo_zrtlow.png',
+                fit: BoxFit.contain,
+                fadeInDuration: const Duration(milliseconds: 0),
               ),
             ),
             ListTile(
