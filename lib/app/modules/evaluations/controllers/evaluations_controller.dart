@@ -1,7 +1,9 @@
 import 'package:biocheck_flutter/app/data/models/models.dart';
 import 'package:biocheck_flutter/app/modules/evaluations/providers/evaluations_provider.dart';
+import 'package:biocheck_flutter/app/modules/new_evaluation/providers/new_eval_provider.dart';
 import 'package:biocheck_flutter/app/providers/sqlite_provider.dart';
 import 'package:biocheck_flutter/app/routes/app_pages.dart';
+import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
 
@@ -45,10 +47,36 @@ class EvaluationsController extends GetxController
       evaluationsList = evals;
       change(evaluationsList, status: RxStatus.success());
     }
+    getEvaluationsFromBackend(userId, token);
+  }
 
-    // Request evaluations from backend
-    else {
+  sendPendingEvaluations() async {
+    final userId = box.read('userId');
+    final token = box.read('token');
+    final tempProvider = NewEvaluationProvider();
+
+    try {
+      List<Evaluation>? pendingEvals =
+          await SQLiteProvider.db.getPendingEvaluations();
+      if (pendingEvals != null) {
+        await Future.forEach(pendingEvals, (Evaluation e) async {
+          await tempProvider.uploadEvaluation(e, token);
+        });
+        SQLiteProvider.db.deleteEvaluations(pendingEvals);
+        await getEvaluationsFromBackend(userId, token);
+      }
+    } catch (e) {
+      print(e);
+    }
+  }
+
+  // Request evaluations from backend
+  getEvaluationsFromBackend(int userId, String token) async {
+    try {
       final Response response = await provider.getEvaluations(userId, token);
+      if (response.statusCode == null) {
+        throw Exception('No internet');
+      }
       evaluationsList.clear();
       response.body.forEach((value) {
         final currentEval = Evaluation.fromMap(value);
@@ -61,6 +89,11 @@ class EvaluationsController extends GetxController
         SQLiteProvider.db.saveEvaluations(evaluationsList);
         change(evaluationsList, status: RxStatus.success());
       }
+    } catch (e) {
+      change(evaluationsList, status: RxStatus.success());
+      Get.snackbar('No internet connection', 'Displaying older evaluations',
+          snackPosition: SnackPosition.BOTTOM,
+          duration: const Duration(seconds: 5));
     }
   }
 }

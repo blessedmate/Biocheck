@@ -1,3 +1,5 @@
+import 'dart:math';
+
 import 'package:biocheck_flutter/app/data/models/models.dart';
 import 'package:biocheck_flutter/app/global_widgets/controllers/main_controller.dart';
 import 'package:biocheck_flutter/app/modules/evaluations/controllers/evaluations_controller.dart';
@@ -57,7 +59,7 @@ class NewEvaluationController extends GetxController {
     print(mainController.startBatteryLevel);
     int finalBattery = await Battery().batteryLevel;
     print('Battery = $finalBattery');
-    print(await location.getLocation());
+    // print(await location.getLocation());
 
     finished.value = true;
     update();
@@ -75,23 +77,45 @@ class NewEvaluationController extends GetxController {
         patientLastName: lastName,
         dueDate: dueDate,
         userId: userId,
-        template: EvaluationTemplate(name: ''),
+        template: EvaluationTemplate(name: 'Cardio Exam'),
       );
-      final Response response =
-          await provider.uploadEvaluation(evaluation, token);
+      try {
+        final Response response =
+            await provider.uploadEvaluation(evaluation, token);
 
-      // Save locally
-      SQLiteProvider.db.saveEvaluation(Evaluation.fromMap(response.body));
+        // Save locally
+        Evaluation evalFromResponse = Evaluation.fromMap(response.body);
+        evalFromResponse.sent = true;
+        await SQLiteProvider.db.saveEvaluation(evalFromResponse);
 
-      // Update UI
-      final evaluationsController = Get.find<EvaluationsController>();
-      evaluationsController.getUserEvaluations();
+        // Update UI
+        final evaluationsController = Get.find<EvaluationsController>();
+        evaluationsController.getUserEvaluations();
 
-      Get.offAndToNamed(Routes.EVALUATIONS);
+        Get.offAndToNamed(Routes.EVALUATIONS);
+      } catch (e) {
+        // Save locally as an unsent evaluation (queue)
+        evaluation.id = getRandomString(32);
+        evaluation.sent = false;
+        await SQLiteProvider.db.saveEvaluation(evaluation);
+        print(e);
+
+        final evaluationsController = Get.find<EvaluationsController>();
+        evaluationsController.getUserEvaluations();
+        Get.offAndToNamed(Routes.EVALUATIONS);
+      }
     }
   }
 
   goToSectionDetail() {
     Get.toNamed(Routes.NEW_EVALUATION_DETAIL);
+  }
+
+  String getRandomString(int length) {
+    const _chars =
+        'AaBbCcDdEeFfGgHhIiJjKkLlMmNnOoPpQqRrSsTtUuVvWwXxYyZz1234567890';
+    Random _rnd = Random();
+    return String.fromCharCodes(Iterable.generate(
+        length, (_) => _chars.codeUnitAt(_rnd.nextInt(_chars.length))));
   }
 }

@@ -16,6 +16,7 @@ class Evaluation {
     required this.dueDate,
     required this.template,
     this.response,
+    this.sent,
   });
 
   String? id;
@@ -25,6 +26,7 @@ class Evaluation {
   String dueDate;
   EvaluationTemplate template;
   EvalResponse? response;
+  bool? sent;
 
   factory Evaluation.fromJson(String str) =>
       Evaluation.fromMap(json.decode(str));
@@ -38,6 +40,7 @@ class Evaluation {
         patientLastName: json["patient_lastName"],
         dueDate: json["due_date"],
         template: EvaluationTemplate.fromMap(json["information"]),
+        sent: json["sent"] ?? true,
       );
 
   Map<String, dynamic> toMap() => {

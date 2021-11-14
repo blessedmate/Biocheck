@@ -12,7 +12,7 @@ class NewEvaluationProvider extends GetConnect {
       "patient_firstName": evaluation.patientFirstName,
       "patient_lastName": evaluation.patientLastName,
       "due_date": evaluation.dueDate,
-      "information": {"name": "Adenoidectomy"}
+      "information": {"name": evaluation.template.name}
     };
     final headers = {
       "access-token": token,

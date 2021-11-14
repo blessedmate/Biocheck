@@ -28,14 +28,15 @@ class SQLiteProvider {
     // Database creation
     return await openDatabase(
       path,
-      version: 1,
+      version: 3,
       onOpen: (db) {},
       onCreate: (Database db, int version) async {
         await db.execute('''
         CREATE TABLE Evaluations(
           id TEXT PRIMARY KEY,
           userId INTEGER,
-          json TEXT
+          json TEXT,
+          sent INTEGER
         )
       ''');
       },
@@ -62,7 +63,9 @@ class SQLiteProvider {
         'id': eval.id,
         'userId': eval.userId,
         'json': eval.toJson(),
+        'sent': eval.sent == true ? 1 : 0,
       },
+      conflictAlgorithm: ConflictAlgorithm.replace,
     );
     return res;
   }
@@ -72,15 +75,44 @@ class SQLiteProvider {
     final db = await database;
     int res = 1;
 
-    // TODO: insert all evaluations at once
     for (var e in evaluations) {
-      res = await db.insert('Evaluations', {
-        'id': e.id,
-        'userId': e.userId,
-        'json': e.toJson(),
-      });
+      res = await db.insert(
+        'Evaluations',
+        {
+          'id': e.id,
+          'userId': e.userId,
+          'json': e.toJson(),
+          'sent': 1,
+        },
+        conflictAlgorithm: ConflictAlgorithm.replace,
+      );
     }
 
     return res;
+  }
+
+  // DELETE MANY EVALUATIONS
+  Future<int> deleteEvaluations(List<Evaluation> evaluations) async {
+    final db = await database;
+    int res = 1;
+
+    for (var e in evaluations) {
+      res = await db.delete(
+        'Evaluations',
+        where: 'id= ?',
+        whereArgs: [e.id],
+      );
+    }
+    return res;
+  }
+
+  Future<List<Evaluation>?> getPendingEvaluations() async {
+    final db = await database;
+    final response = await db.query('Evaluations', where: 'sent=0');
+    return response.isNotEmpty
+        ? response
+            .map((e) => Evaluation.fromJson(e['json'].toString()))
+            .toList()
+        : null;
   }
 }

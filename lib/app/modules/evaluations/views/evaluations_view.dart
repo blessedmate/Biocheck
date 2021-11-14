@@ -23,15 +23,23 @@ class EvaluationsView extends GetView<EvaluationsController> {
         children: [
           BeginEvaluationButton(controller: controller, context: context),
           controller.obx(
-              (evaluations) =>
-                  EvaluationsList(appbar: appbar, controller: controller),
-              onLoading: const Center(
-                child: CircularProgressIndicator(),
-              ),
-              onEmpty: const Center(
-                child: Text('No previous evaluations'),
-              )),
+            (evaluations) =>
+                EvaluationsList(appbar: appbar, controller: controller),
+            onLoading: const Center(
+              child: CircularProgressIndicator(),
+            ),
+            onEmpty: const Center(
+              child: Text('No previous evaluations'),
+            ),
+          ),
         ],
+      ),
+      floatingActionButton: FloatingActionButton(
+        child: const Icon(Icons.update_outlined),
+        backgroundColor: Palette.primaryColor,
+        onPressed: () {
+          controller.sendPendingEvaluations();
+        },
       ),
     );
   }
@@ -94,6 +102,7 @@ class EvaluationsList extends StatelessWidget {
           MediaQuery.of(Get.context!).padding.top -
           appbar.preferredSize.height,
       child: ListView.builder(
+        physics: const BouncingScrollPhysics(),
         itemCount: evaluationsList.length,
         scrollDirection: Axis.vertical,
         itemBuilder: (_, int index) => EvaluationCard(
@@ -117,8 +126,6 @@ class EvaluationCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    String location = 'Radis Gallery - Santa Cruz, CA';
-
     return GestureDetector(
       onTap: () {
         controller.previousEvaluationDetail();
@@ -162,12 +169,13 @@ class EvaluationCard extends StatelessWidget {
                   Row(
                     children: [
                       const Icon(
-                        Icons.location_on_outlined,
+                        Icons.person_outline,
                         color: Colors.black54,
                         size: 16,
                       ),
+                      const SizedBox(width: 10),
                       Text(
-                        location,
+                        '${evaluation.patientFirstName} ${evaluation.patientLastName}',
                         style: const TextStyle(
                             color: Colors.black54, fontSize: 14),
                       ),
@@ -175,10 +183,10 @@ class EvaluationCard extends StatelessWidget {
                   ),
                 ],
               ),
-              Obx(() => controller.incompleteEvaluation()
-                  ? const Icon(Icons.access_time,
+              evaluation.sent == false
+                  ? const Icon(Icons.update_outlined,
                       color: Colors.yellow, size: 32)
-                  : Container())
+                  : Container()
             ],
           )),
     );
