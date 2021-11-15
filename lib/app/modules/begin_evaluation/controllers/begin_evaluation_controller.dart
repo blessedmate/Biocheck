@@ -1,24 +1,49 @@
 import 'package:battery_plus/battery_plus.dart';
 import 'package:biocheck_flutter/app/data/models/evaluation.dart';
+import 'package:biocheck_flutter/app/data/models/template.dart';
 import 'package:biocheck_flutter/app/global_widgets/controllers/main_controller.dart';
 import 'package:biocheck_flutter/app/modules/begin_evaluation/providers/templates_provider.dart';
 import 'package:biocheck_flutter/app/routes/app_pages.dart';
 import 'package:get/get.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 
 class BeginEvaluationController extends GetxController
     with StateMixin<List<Evaluation>> {
+  final templatesCollection =
+      FirebaseFirestore.instance.collection('templates');
+
+  List<Template> templates = [];
+  List<Template> templatesCopy = [];
+
   @override
   void onInit() {
     super.onInit();
-    loadData();
+    loadTemplates();
   }
 
   loadData() async {
     change(null, status: RxStatus.loading());
     final provider = TemplatesProvider();
-    // Response resp = await provider.getEvaluations();
-    // List<Evaluation> list = evaluationFromJson(resp.body);
-    // change(list, status: RxStatus.success());
+    change([], status: RxStatus.success());
+  }
+
+  search(String text) {
+    if (text == '') {
+      templates = templatesCopy;
+    } else {
+      templates = templates
+          .where((element) =>
+              element.title.toLowerCase().contains(text.toLowerCase()))
+          .toList();
+    }
+  }
+
+  loadTemplates() async {
+    final templatesFire = await templatesCollection.get();
+    for (var e in templatesFire.docs) {
+      templates.add(Template.fromJson(e.data()));
+    }
+    templatesCopy = templates;
     change([], status: RxStatus.success());
   }
 
