@@ -12,23 +12,23 @@ class Template {
     this.id,
     required this.title,
     required this.specialty,
-    required this.questions,
+    // required this.questions,
   });
 
   String? id;
   String title;
   String specialty;
-  List<dynamic> questions;
+  // List<dynamic> questions;
 
   factory Template.fromJson(Map<String, dynamic> json) => Template(
         title: json["title"],
         specialty: json["specialty"],
-        questions: List<dynamic>.from(json["questions"].map((x) => x)),
+        // questions: List<dynamic>.from(json["questions"].map((x) => x)),
       );
 
   Map<String, dynamic> toJson() => {
         "title": title,
         "specialty": specialty,
-        "questions": List<dynamic>.from(questions.map((x) => x)),
+        // "questions": List<dynamic>.from(questions.map((x) => x)),
       };
 }

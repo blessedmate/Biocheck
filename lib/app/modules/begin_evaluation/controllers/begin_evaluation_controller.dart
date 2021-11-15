@@ -47,6 +47,7 @@ class BeginEvaluationController extends GetxController
 
     // Get templates from backend
     try {
+      templates.clear();
       final templatesFire = await templatesCollection.get();
       for (var e in templatesFire.docs) {
         Template current = Template.fromJson(e.data());
