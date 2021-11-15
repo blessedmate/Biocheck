@@ -9,11 +9,13 @@ String templateToJson(List<Template> data) =>
 
 class Template {
   Template({
+    this.id,
     required this.title,
     required this.specialty,
     required this.questions,
   });
 
+  String? id;
   String title;
   String specialty;
   List<dynamic> questions;

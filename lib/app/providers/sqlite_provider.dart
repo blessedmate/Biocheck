@@ -28,7 +28,7 @@ class SQLiteProvider {
     // Database creation
     return await openDatabase(
       path,
-      version: 3,
+      version: 5,
       onOpen: (db) {},
       onCreate: (Database db, int version) async {
         await db.execute('''
@@ -37,6 +37,13 @@ class SQLiteProvider {
           userId INTEGER,
           json TEXT,
           sent INTEGER
+        )
+      ''');
+        await db.execute('''
+        CREATE TABLE Templates(
+          id TEXT PRIMARY KEY,
+          title TEXT,
+          specialty TEXT
         )
       ''');
       },
@@ -114,5 +121,34 @@ class SQLiteProvider {
             .map((e) => Evaluation.fromJson(e['json'].toString()))
             .toList()
         : null;
+  }
+
+  // GET TEMPLATES
+  Future<List<Template>?> getTemplates() async {
+    final db = await database;
+    final response = await db.query('Templates');
+    return response.isNotEmpty
+        ? response.map((e) => Template.fromJson(e)).toList()
+        : null;
+  }
+
+  // SAVE TEMPLATES
+  Future<int> saveTemplates(List<Template> templates) async {
+    final db = await database;
+    int res = 1;
+
+    for (var t in templates) {
+      res = await db.insert(
+        'Templates',
+        {
+          'id': t.id,
+          'title': t.title,
+          'specialty': t.specialty,
+        },
+        conflictAlgorithm: ConflictAlgorithm.replace,
+      );
+    }
+
+    return res;
   }
 }

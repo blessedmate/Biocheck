@@ -72,7 +72,7 @@ class NewEvaluationView extends GetView<NewEvaluationController> {
                           : Container()),
 
               const SizedBox(height: 30),
-              SectionsList(controller: controller),
+              // SectionsList(controller: controller),
               SaveAndPredictButton(controller: controller),
             ],
           ),

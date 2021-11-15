@@ -111,6 +111,7 @@ class NewEvaluationController extends GetxController {
     Get.toNamed(Routes.NEW_EVALUATION_DETAIL);
   }
 
+  // Used to generate random ids
   String getRandomString(int length) {
     const _chars =
         'AaBbCcDdEeFfGgHhIiJjKkLlMmNnOoPpQqRrSsTtUuVvWwXxYyZz1234567890';
