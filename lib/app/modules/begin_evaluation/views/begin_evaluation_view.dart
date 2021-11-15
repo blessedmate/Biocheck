@@ -1,3 +1,4 @@
+import 'package:biocheck_flutter/app/data/models/template.dart';
 import 'package:biocheck_flutter/app/global_widgets/input.dart';
 import 'package:biocheck_flutter/app/routes/app_pages.dart';
 import 'package:biocheck_flutter/app/utils/palette.dart';
@@ -46,18 +47,8 @@ class BeginEvaluationView extends GetView<BeginEvaluationController> {
       child: CustomInput(
         icon: Icon(Icons.search),
         labelText: 'Search format',
-        onChanged: (param) {},
+        onChanged: (param) => controller.search(param),
       ),
-      // TextField(
-      //   textCapitalization: TextCapitalization.sentences,
-      //   decoration: InputDecoration(
-      //     border: OutlineInputBorder(
-      //       borderRadius: BorderRadius.circular(10),
-      //     ),
-      //     labelText: 'Search format',
-      //     prefixIcon: const Icon(Icons.search),
-      //   ),
-      // ),
     );
   }
 
@@ -71,16 +62,14 @@ class BeginEvaluationView extends GetView<BeginEvaluationController> {
           appbar.preferredSize.height -
           100,
       child: ListView.builder(
-        itemCount: 20,
-        itemBuilder: (_, int index) => _newEvaluation(),
+        itemCount: controller.templates.length,
+        itemBuilder: (_, int index) =>
+            _newEvaluation(controller.templates[index]),
       ),
     );
   }
 
-  Widget _newEvaluation() {
-    String medicineField = 'Otolaryngology';
-    String surgeryType = 'Paranasal Sinus Endoscopy';
-
+  Widget _newEvaluation(Template templateModel) {
     return GestureDetector(
       onTap: () => controller.tapOnEvaluationItem(),
       child: Container(
@@ -105,7 +94,7 @@ class BeginEvaluationView extends GetView<BeginEvaluationController> {
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   Text(
-                    medicineField.toString(),
+                    templateModel.specialty,
                     style: const TextStyle(
                         color: Palette.primaryColor, fontSize: 14),
                   ),
@@ -113,7 +102,7 @@ class BeginEvaluationView extends GetView<BeginEvaluationController> {
                     height: 10,
                   ),
                   Text(
-                    surgeryType,
+                    templateModel.title,
                     style: const TextStyle(color: Colors.black, fontSize: 18),
                   ),
                 ],
