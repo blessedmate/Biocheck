@@ -1,6 +1,7 @@
 import 'dart:math';
 
 import 'package:biocheck_flutter/app/data/models/models.dart';
+import 'package:biocheck_flutter/app/data/models/template.dart';
 import 'package:biocheck_flutter/app/global_widgets/controllers/main_controller.dart';
 import 'package:biocheck_flutter/app/modules/evaluations/controllers/evaluations_controller.dart';
 import 'package:biocheck_flutter/app/modules/new_evaluation/providers/new_eval_provider.dart';
@@ -18,10 +19,18 @@ class NewEvaluationController extends GetxController {
 
   final finished = false.obs;
   Location location = Location();
-
+  late Template template;
   final dateController = TextEditingController();
   final firstNameController = TextEditingController();
   final lastNameController = TextEditingController();
+
+  // List<RxInt>
+
+  @override
+  void onInit() {
+    super.onInit();
+    template = Get.arguments;
+  }
 
   setSelectedDate(DateTime? picked) {
     if (picked != null) {

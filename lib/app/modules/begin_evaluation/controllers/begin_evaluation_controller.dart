@@ -12,8 +12,8 @@ class BeginEvaluationController extends GetxController
   final templatesCollection =
       FirebaseFirestore.instance.collection('templates');
 
-  List<Template> templates = [];
-  List<Template> templatesCopy = [];
+  RxList<Template> templates = RxList<Template>();
+  RxList<Template> templatesCopy = RxList<Template>();
 
   @override
   void onInit() {
@@ -21,17 +21,11 @@ class BeginEvaluationController extends GetxController
     loadTemplates();
   }
 
-  loadData() async {
-    change(null, status: RxStatus.loading());
-    final provider = TemplatesProvider();
-    change([], status: RxStatus.success());
-  }
-
   search(String text) {
     if (text == '') {
-      templates = templatesCopy;
+      templates.addAll(templatesCopy);
     } else {
-      templates = templates
+      templates.value = templates
           .where((element) =>
               element.title.toLowerCase().contains(text.toLowerCase()))
           .toList();
@@ -42,14 +36,15 @@ class BeginEvaluationController extends GetxController
     final templatesFire = await templatesCollection.get();
     for (var e in templatesFire.docs) {
       templates.add(Template.fromJson(e.data()));
+      templatesCopy.add(Template.fromJson(e.data()));
     }
-    templatesCopy = templates;
+    // templatesCopy = templates;
     change([], status: RxStatus.success());
   }
 
-  tapOnEvaluationItem() async {
+  tapOnEvaluationItem(Template template) async {
     final mainController = Get.find<MainController>();
     mainController.startBatteryLevel = await Battery().batteryLevel;
-    Get.toNamed(Routes.NEW_EVALUATION);
+    Get.toNamed(Routes.NEW_EVALUATION, arguments: template);
   }
 }
