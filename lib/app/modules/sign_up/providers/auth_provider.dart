@@ -9,10 +9,10 @@ class AuthProvider extends GetConnect {
     final uri = Uri.https(url, 'Beta/users');
     final body = {
       'email': email,
-      'name': name,
+      'name': 'Fernan Mendoza',
       'username': username,
       'password': password,
-      'institution': institution
+      'institution': 'Hospital Santa Fe'
     };
     return await post(uri.toString(), body);
   }

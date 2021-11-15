@@ -1,8 +1,11 @@
 import 'package:biocheck_flutter/app/modules/sign_up/providers/auth_provider.dart';
 import 'package:biocheck_flutter/app/routes/app_pages.dart';
 import 'package:get/get.dart';
+import 'package:get_storage/get_storage.dart';
 
 class SignUpController extends GetxController {
+  final box = GetStorage();
+
   final _loading = false.obs;
   bool get loading => _loading.value;
   set loading(bool newValue) => _loading.value = newValue;
@@ -52,8 +55,11 @@ class SignUpController extends GetxController {
     if (!error) {
       Response resp =
           await provider.signUp(name, email, username, password, institution);
-      if (resp.statusCode == 201) {
-        Get.offAndToNamed(Routes.EVALUATIONS);
+      if (resp.statusCode == 200) {
+        Get.offAndToNamed(Routes.SIGN_IN);
+        Get.snackbar('Succesful registration', 'Sign in to continue',
+            snackPosition: SnackPosition.BOTTOM,
+            duration: const Duration(seconds: 4));
       } else {
         error = true;
         message = resp.body['message'];
