@@ -3,6 +3,7 @@ import 'package:biocheck_flutter/app/global_widgets/primary_button.dart';
 import 'package:biocheck_flutter/app/routes/app_pages.dart';
 import 'package:biocheck_flutter/app/utils/palette.dart';
 import 'package:biocheck_flutter/app/utils/typography_styles.dart';
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
@@ -30,9 +31,11 @@ class SignInView extends GetView<SignInController> {
                   ),
                   Align(
                     alignment: Alignment.center,
-                    child: Image.asset(
-                      'assets/logo.png',
+                    child: CachedNetworkImage(
+                      imageUrl:
+                          'https://res.cloudinary.com/dkwnvvjcs/image/upload/v1636933892/biocheck/logo_zrtlow.png',
                       width: Get.width * 0.3,
+                      fadeInDuration: const Duration(milliseconds: 0),
                     ),
                   ),
                   const SizedBox(
@@ -47,8 +50,8 @@ class SignInView extends GetView<SignInController> {
                   ),
                   CustomInput(
                     icon: const FaIcon(FontAwesomeIcons.envelope),
-                    labelText: 'Email',
-                    onChanged: (val) => controller.email = val,
+                    labelText: 'Username',
+                    onChanged: (val) => controller.username = val,
                   ),
                   const SizedBox(
                     height: 25,
@@ -72,32 +75,6 @@ class SignInView extends GetView<SignInController> {
                               ),
                             )
                           : Container()),
-
-                  // Row(
-                  //   children: [
-                  //     Row(
-                  //       children: [
-                  //         SizedBox(
-                  //           height: 30,
-                  //           width: 35,
-                  //           child: Transform.scale(
-                  //             transformHitTests: false,
-                  //             scale: .6,
-                  //             child: CupertinoSwitch(
-                  //               value: false,
-                  //               onChanged: (value) {},
-                  //               activeColor: Colors.green,
-                  //             ),
-                  //           ),
-                  //         ),
-                  //         const SizedBox(
-                  //           width: 10,
-                  //         ),
-                  //         const Text('Remember me')
-                  //       ],
-                  //     )
-                  //   ],
-                  // ),
                   const SizedBox(
                     height: 10,
                   ),
@@ -130,10 +107,9 @@ class SignInView extends GetView<SignInController> {
                     ),
                   )),
                   const SizedBox(height: 15),
-
                   Center(
                     child: GestureDetector(
-                      onTap: () {},
+                      onTap: () => controller.goToSignUp(),
                       child: RichText(
                         text: const TextSpan(
                             text: 'Don\'t have an account?',

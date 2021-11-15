@@ -1,3 +1,4 @@
+import 'package:biocheck_flutter/app/global_widgets/global_widgets.dart';
 import 'package:biocheck_flutter/app/utils/palette.dart';
 import 'package:biocheck_flutter/app/utils/typography_styles.dart';
 import 'package:flutter/material.dart';
@@ -12,160 +13,205 @@ class NewEvaluationView extends GetView<NewEvaluationController> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
+      floatingActionButton: SaveAndPredictButton(
+        controller: controller,
+      ),
       appBar: AppBar(
         title: const Text(
           'Evaluation',
           style: TypographyStyles.title,
         ),
       ),
-      body: Center(
-        child: Column(
-          children: <Widget>[
-            const SizedBox(height: 10),
-            Options(
-                controller: controller,
-                title: 'Diagnosis',
-                options: controller.options1,
-                onChangeValue: controller.val1),
-            Options(
-                controller: controller,
-                title: 'Previous surgery',
-                options: controller.options2,
-                onChangeValue: controller.val2),
-            const SectionsList(),
-            SaveAndPredictButton(controller: controller),
-          ],
+      body: SingleChildScrollView(
+        physics: const BouncingScrollPhysics(),
+        child: Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 25),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              const SizedBox(height: 20),
+
+              // Date field
+              CustomInput(
+                icon: const Icon(Icons.date_range),
+                readOnly: true,
+                labelText: 'Evaluation due date',
+                textController: controller.dateController,
+                onTap: () => _selectDate(),
+              ),
+              GetBuilder<NewEvaluationController>(
+                  builder: (_) =>
+                      controller.showWarning(controller.dateController)
+                          ? _warningText()
+                          : Container()),
+              const SizedBox(height: 20),
+
+              const Text('Patient\'s Info', style: TypographyStyles.subtitle),
+              const SizedBox(height: 20),
+
+              // First name field
+              CustomInput(
+                icon: const SizedBox(),
+                labelText: 'First name',
+                textController: controller.firstNameController,
+              ),
+              GetBuilder<NewEvaluationController>(
+                  builder: (_) =>
+                      controller.showWarning(controller.firstNameController)
+                          ? _warningText()
+                          : Container()),
+              const SizedBox(height: 20),
+
+              // Last name field
+              CustomInput(
+                icon: const SizedBox(),
+                labelText: 'Last name',
+                textController: controller.lastNameController,
+              ),
+              GetBuilder<NewEvaluationController>(
+                  builder: (_) =>
+                      controller.showWarning(controller.lastNameController)
+                          ? _warningText()
+                          : Container()),
+              // ...controller.template.questions
+              //     .map((e) => Column(
+              //             mainAxisAlignment: MainAxisAlignment.start,
+              //             crossAxisAlignment: CrossAxisAlignment.start,
+              //             children: [
+              //               const SizedBox(
+              //                 height: 10,
+              //               ),
+              //               Text(
+              //                 e,
+              //                 style: TextStyle(fontSize: 20),
+              //               ),
+              //               const SizedBox(
+              //                 height: 10,
+              //               ),
+              //               Row(
+              //                 children: [
+              //                   Row(
+              //                     children: [
+              //                       Text('Si'),
+              //                       Radio(
+              //                           value: 1,
+              //                           groupValue: 1,
+              //                           onChanged: (val) {}),
+              //                     ],
+              //                   ),
+              //                   Row(
+              //                     children: [
+              //                       Text('No'),
+              //                       Radio(
+              //                           value: 0,
+              //                           groupValue: 1,
+              //                           onChanged: (val) {}),
+              //                     ],
+              //                   ),
+              //                 ],
+              //               ),
+              //               const SizedBox(
+              //                 height: 20,
+              //               ),
+              //             ]))
+              //     .toList(),
+              const SizedBox(height: 30),
+
+              // SaveAndPredictButton(controller: controller),
+            ],
+          ),
         ),
       ),
     );
   }
-}
 
-class Options extends StatelessWidget {
-  const Options({
-    Key? key,
-    required this.controller,
-    required this.title,
-    required this.options,
-    required this.onChangeValue,
-  }) : super(key: key);
-
-  final NewEvaluationController controller;
-  final String title;
-  final List<String> options;
-  final onChangeValue;
-
-  @override
-  Widget build(BuildContext context) {
+  Column _warningText() {
     return Column(
-      children: [
-        // TODO: Align title left
-        Text(title, style: TypographyStyles.subtitle),
-        SizedBox(
-          height: (options.length.isOdd)
-              ? 70 * (options.length + 1) / 2
-              : 70 * options.length / 2,
-          child: GridView.builder(
-              physics: const NeverScrollableScrollPhysics(),
-              itemCount: options.length,
-              gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-                crossAxisCount: 2,
-                childAspectRatio: (3 / 1),
-                crossAxisSpacing: 5,
-                mainAxisSpacing: 1,
-              ),
-              itemBuilder: (context, index) => Obx(() => SizedBox(
-                    width: Get.width * 0.4,
-                    height: 40,
-                    child: Row(
-                      children: [
-                        Radio(
-                          activeColor: Palette.secondaryColor,
-                          value: options[index],
-                          groupValue: onChangeValue.value,
-                          onChanged: (value) {
-                            onChangeValue.value = value as String;
-                          },
-                        ),
-                        Text(
-                          options[index],
-                          style: TypographyStyles.evaluationOptions,
-                        )
-                      ],
-                    ),
-                  ))),
+      children: const [
+        Text(
+          'You must select an option',
+          style: TypographyStyles.warning,
         ),
-        Obx(() => controller.showWarning(onChangeValue)
-            ? Column(
-                children: const [
-                  Text(
-                    'You must select an option',
-                    style: TypographyStyles.warning,
-                  ),
-                  SizedBox(height: 10)
-                ],
-              )
-            : Container())
+        SizedBox(height: 10)
       ],
     );
   }
-}
 
-class SectionsList extends StatelessWidget {
-  const SectionsList({Key? key}) : super(key: key);
+  void _selectDate() async {
+    DateTime? picked = await showDatePicker(
+        context: Get.context!,
+        initialDate: DateTime.now(),
+        firstDate: DateTime(2018),
+        lastDate: DateTime(2025));
 
-  @override
-  Widget build(BuildContext context) {
-    return SizedBox(
-      height: 250,
-      child: ListView.builder(
-        physics: const BouncingScrollPhysics(),
-        itemCount: 4,
-        scrollDirection: Axis.vertical,
-        itemBuilder: (_, index) => const Section(title: 'Axial'),
-      ),
-    );
+    controller.setSelectedDate(picked);
   }
 }
 
-class Section extends StatelessWidget {
-  const Section({
-    Key? key,
-    required this.title,
-  }) : super(key: key);
+// class SectionsList extends StatelessWidget {
+//   const SectionsList({Key? key, required this.controller}) : super(key: key);
+//   final NewEvaluationController controller;
 
-  final String title;
+//   @override
+//   Widget build(BuildContext context) {
+//     return SizedBox(
+//       height: 250,
+//       child: ListView.builder(
+//         physics: const BouncingScrollPhysics(),
+//         itemCount: 4,
+//         scrollDirection: Axis.vertical,
+//         itemBuilder: (_, index) =>
+//             Section(title: 'Axial', controller: controller),
+//       ),
+//     );
+//   }
+// }
 
-  @override
-  Widget build(BuildContext context) {
-    return Container(
-      height: 60,
-      margin: const EdgeInsets.symmetric(horizontal: 25, vertical: 10),
-      padding: const EdgeInsets.symmetric(horizontal: 20),
-      decoration: BoxDecoration(
-        borderRadius: BorderRadius.circular(10),
-        color: Colors.white,
-        boxShadow: const [
-          BoxShadow(
-              color: Colors.white10,
-              offset: Offset(0, 0),
-              blurRadius: 4,
-              spreadRadius: 1)
-        ],
-      ),
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-        children: [
-          Text(
-            title,
-            style: TypographyStyles.subtitle,
-          ),
-          const Icon(Icons.check_circle_outline, color: Palette.secondaryColor),
-        ],
-      ),
-    );
-  }
-}
+// class Section extends StatelessWidget {
+//   const Section({
+//     Key? key,
+//     required this.title,
+//     required this.controller,
+//   }) : super(key: key);
+
+//   final String title;
+//   final NewEvaluationController controller;
+
+//   @override
+//   Widget build(BuildContext context) {
+//     return GestureDetector(
+//       onTap: () => controller.goToSectionDetail(),
+//       child: Container(
+//         height: 60,
+//         margin: const EdgeInsets.symmetric(vertical: 10),
+//         padding: const EdgeInsets.symmetric(horizontal: 20),
+//         decoration: BoxDecoration(
+//           borderRadius: BorderRadius.circular(10),
+//           color: Colors.white,
+//           boxShadow: const [
+//             BoxShadow(
+//                 color: Colors.white10,
+//                 offset: Offset(0, 0),
+//                 blurRadius: 4,
+//                 spreadRadius: 1)
+//           ],
+//         ),
+//         child: Row(
+//           mainAxisAlignment: MainAxisAlignment.spaceBetween,
+//           children: [
+//             Text(
+//               title,
+//               style: TypographyStyles.subtitle,
+//             ),
+//             const Icon(Icons.check_circle_outline,
+//                 color: Palette.secondaryColor),
+//           ],
+//         ),
+//       ),
+//     );
+//   }
+// }
 
 class SaveAndPredictButton extends StatelessWidget {
   const SaveAndPredictButton({
@@ -178,13 +224,13 @@ class SaveAndPredictButton extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      margin: const EdgeInsets.symmetric(vertical: 25, horizontal: 30),
-      width: double.infinity,
+      margin: const EdgeInsets.symmetric(vertical: 25),
+      width: Get.width * 0.9,
       height: 65,
       child: ElevatedButton(
         onPressed: () => controller.submit(),
         child: const Text(
-          'Save & Predict',
+          'Save',
           style: TypographyStyles.bigbuttons,
         ),
         style: ElevatedButton.styleFrom(

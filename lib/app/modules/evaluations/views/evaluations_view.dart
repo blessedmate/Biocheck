@@ -1,6 +1,8 @@
-import 'package:biocheck_flutter/app/routes/app_pages.dart';
+import 'package:biocheck_flutter/app/data/models/models.dart';
+import 'package:biocheck_flutter/app/global_widgets/global_widgets.dart';
 import 'package:biocheck_flutter/app/utils/palette.dart';
 import 'package:biocheck_flutter/app/utils/typography_styles.dart';
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 
 import 'package:get/get.dart';
@@ -9,32 +11,41 @@ import '../controllers/evaluations_controller.dart';
 
 class EvaluationsView extends GetView<EvaluationsController> {
   AppBar appbar = AppBar(
-    leading: TextButton(
-      onPressed: () {},
-      child: const Icon(
-        Icons.menu,
-        color: Palette.primaryColor,
-        size: 30,
-      ),
-      style: TextButton.styleFrom(
-        primary: Colors.white,
-        elevation: 0,
-      ),
-    ),
     title: const Text(
       'BioCheck',
     ),
   );
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: appbar,
+      drawer: Menu(),
       body: Column(
         children: [
           BeginEvaluationButton(controller: controller, context: context),
-          EvaluationsList(appbar: appbar, controller: controller),
+          controller.obx(
+            (evaluations) =>
+                EvaluationsList(appbar: appbar, controller: controller),
+            onLoading: const Center(
+              child: CircularProgressIndicator(),
+            ),
+            onEmpty: const Center(
+              child: Text('No previous evaluations'),
+            ),
+          ),
         ],
+      ),
+      floatingActionButton: FloatingActionButton(
+        child: CachedNetworkImage(
+          imageUrl:
+              'https://res.cloudinary.com/dkwnvvjcs/image/upload/v1636933192/biocheck/sync_gfzpag.png',
+          height: 30,
+          fadeInDuration: const Duration(milliseconds: 0),
+        ),
+        backgroundColor: Palette.primaryColor,
+        onPressed: () {
+          controller.sendPendingEvaluations();
+        },
       ),
     );
   }
@@ -85,6 +96,7 @@ class EvaluationsList extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final List<Evaluation> evaluationsList = controller.evaluationsList;
     const marginBeginEvaluation = 50;
     const sizeBeginEvaluation = 65;
 
@@ -96,28 +108,30 @@ class EvaluationsList extends StatelessWidget {
           MediaQuery.of(Get.context!).padding.top -
           appbar.preferredSize.height,
       child: ListView.builder(
-        itemCount: 20,
+        physics: const BouncingScrollPhysics(),
+        itemCount: evaluationsList.length,
         scrollDirection: Axis.vertical,
-        itemBuilder: (_, int index) => Evaluation(controller: controller),
+        itemBuilder: (_, int index) => EvaluationCard(
+          controller: controller,
+          evaluation: evaluationsList[index],
+        ),
       ),
     );
   }
 }
 
-class Evaluation extends StatelessWidget {
-  const Evaluation({
+class EvaluationCard extends StatelessWidget {
+  const EvaluationCard({
     Key? key,
     required this.controller,
+    required this.evaluation,
   }) : super(key: key);
 
   final EvaluationsController controller;
+  final Evaluation evaluation;
 
   @override
   Widget build(BuildContext context) {
-    DateTime date = DateTime.now();
-    String surgeryType = 'Paranasal Sinus Endoscopy';
-    String location = 'Radis Gallery - Santa Cruz, CA';
-
     return GestureDetector(
       onTap: () {
         controller.previousEvaluationDetail();
@@ -144,7 +158,7 @@ class Evaluation extends StatelessWidget {
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   Text(
-                    date.toString(),
+                    evaluation.dueDate,
                     style: const TextStyle(
                         color: Palette.primaryColor, fontSize: 14),
                   ),
@@ -152,7 +166,7 @@ class Evaluation extends StatelessWidget {
                     height: 5,
                   ),
                   Text(
-                    surgeryType,
+                    evaluation.template.name,
                     style: const TextStyle(color: Colors.black, fontSize: 18),
                   ),
                   const SizedBox(
@@ -161,12 +175,13 @@ class Evaluation extends StatelessWidget {
                   Row(
                     children: [
                       const Icon(
-                        Icons.location_on_outlined,
+                        Icons.person_outline,
                         color: Colors.black54,
                         size: 16,
                       ),
+                      const SizedBox(width: 10),
                       Text(
-                        location,
+                        '${evaluation.patientFirstName} ${evaluation.patientLastName}',
                         style: const TextStyle(
                             color: Colors.black54, fontSize: 14),
                       ),
@@ -174,10 +189,10 @@ class Evaluation extends StatelessWidget {
                   ),
                 ],
               ),
-              Obx(() => controller.incompleteEvaluation()
-                  ? const Icon(Icons.access_time,
+              evaluation.sent == false
+                  ? const Icon(Icons.update_outlined,
                       color: Colors.yellow, size: 32)
-                  : Container())
+                  : Container()
             ],
           )),
     );

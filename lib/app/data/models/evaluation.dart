@@ -3,47 +3,52 @@
 //     final evaluation = evaluationFromJson(jsonString);
 
 import 'package:biocheck_flutter/app/data/models/eval_response.dart';
-import 'package:biocheck_flutter/app/data/models/questions_group.dart';
-import 'package:meta/meta.dart';
 import 'dart:convert';
 
-List<Evaluation> evaluationFromJson(dynamic str) =>
-    List<Evaluation>.from(str.map((x) => Evaluation.fromJson(x)));
-
-String evaluationToJson(List<Evaluation> data) =>
-    json.encode(List<dynamic>.from(data.map((x) => x.toJson())));
+import 'models.dart';
 
 class Evaluation {
   Evaluation({
-    required this.id,
-    required this.name,
-    required this.specialty,
-    required this.questionsGroup,
-    required this.response,
+    this.id,
+    required this.userId,
+    required this.patientFirstName,
+    required this.patientLastName,
+    required this.dueDate,
+    required this.template,
+    this.response,
+    this.sent,
   });
 
-  int id;
-  String name;
-  String specialty;
-  List<QuestionsGroup> questionsGroup;
+  String? id;
+  int userId;
+  String patientFirstName;
+  String patientLastName;
+  String dueDate;
+  EvaluationTemplate template;
   EvalResponse? response;
+  bool? sent;
 
-  factory Evaluation.fromJson(Map<String, dynamic> json) => Evaluation(
-      id: json["id"],
-      name: json["name"],
-      specialty: json["specialty"],
-      questionsGroup: List<QuestionsGroup>.from(
-          json["questionsGroup"].map((x) => QuestionsGroup.fromJson(x))),
-      response: json["response"] != null
-          ? EvalResponse.fromJson(json["response"])
-          : null);
+  factory Evaluation.fromJson(String str) =>
+      Evaluation.fromMap(json.decode(str));
 
-  Map<String, dynamic> toJson() => {
-        "id": id,
-        "name": name,
-        "specialty": specialty,
-        "questionsGroup":
-            List<dynamic>.from(questionsGroup.map((x) => x.toJson())),
-        "response": response?.toJson(),
+  String toJson() => json.encode(toMap());
+
+  factory Evaluation.fromMap(Map<String, dynamic> json) => Evaluation(
+        id: json["_id"],
+        userId: json["user_id"],
+        patientFirstName: json["patient_firstName"],
+        patientLastName: json["patient_lastName"],
+        dueDate: json["due_date"],
+        template: EvaluationTemplate.fromMap(json["information"]),
+        sent: json["sent"] ?? true,
+      );
+
+  Map<String, dynamic> toMap() => {
+        "_id": id,
+        "user_id": userId,
+        "patient_firstName": patientFirstName,
+        "patient_lastName": patientLastName,
+        "due_date": dueDate,
+        "information": template.toMap(),
       };
 }

@@ -3,8 +3,11 @@ import 'package:biocheck_flutter/app/routes/app_pages.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 import 'package:local_auth/local_auth.dart';
+import 'package:get_storage/get_storage.dart';
 
 class SignInController extends GetxController {
+  final box = GetStorage();
+
   final _loading = false.obs;
   bool get loading => _loading.value;
   set loading(bool newValue) => _loading.value = newValue;
@@ -13,9 +16,9 @@ class SignInController extends GetxController {
   bool get error => _error.value;
   set error(bool newValue) => _error.value = newValue;
 
-  final _email = ''.obs;
-  String get email => _email.value;
-  set email(String newValue) => _email.value = newValue;
+  final _username = ''.obs;
+  String get username => _username.value;
+  set username(String newValue) => _username.value = newValue;
 
   final _password = ''.obs;
   String get password => _password.value;
@@ -28,10 +31,12 @@ class SignInController extends GetxController {
     loading = true;
 
     final provider = AuthProvider();
-    Response resp = await provider.login(email, password);
-    print(resp.body);
-    if (resp.statusCode == 201) {
+    Response resp = await provider.login(username, password);
+
+    if (resp.statusCode == 200) {
       Get.offAllNamed(Routes.EVALUATIONS);
+      box.write('token', resp.body['token']);
+      box.write('userId', resp.body['data']['id']);
     } else {
       error = true;
       message = resp.body['message'];
@@ -68,5 +73,9 @@ class SignInController extends GetxController {
     } on PlatformException catch (e) {
       return false;
     }
+  }
+
+  goToSignUp() {
+    Get.offAndToNamed(Routes.SIGN_UP);
   }
 }

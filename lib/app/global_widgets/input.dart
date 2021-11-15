@@ -5,13 +5,19 @@ class CustomInput extends StatelessWidget {
   final Widget icon;
   final String labelText;
   // final ValueSetter<String> onChanged;
-  final Function(String) onChanged;
-  const CustomInput(
-      {Key? key,
-      required this.icon,
-      required this.labelText,
-      required this.onChanged})
-      : super(key: key);
+  final Function(String)? onChanged;
+  final Function()? onTap;
+  final TextEditingController? textController;
+  final bool readOnly;
+  const CustomInput({
+    Key? key,
+    required this.icon,
+    required this.labelText,
+    this.onChanged,
+    this.onTap,
+    this.textController,
+    this.readOnly = false,
+  }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -32,6 +38,9 @@ class CustomInput extends StatelessWidget {
             child: TextField(
               cursorColor: Palette.primaryColor,
               onChanged: onChanged,
+              onTap: onTap,
+              readOnly: readOnly,
+              controller: textController,
               decoration: InputDecoration(
                   labelText: labelText,
                   labelStyle: const TextStyle(color: Palette.primaryColor),
