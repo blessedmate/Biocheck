@@ -18,7 +18,6 @@ void main() async {
   SQLiteProvider.db.initDB();
   Get.put(MainController());
   final token = box.read('token');
-  print(token);
   runApp(
     GetMaterialApp(
       title: 'BioCheck App',
