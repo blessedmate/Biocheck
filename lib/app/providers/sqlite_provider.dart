@@ -26,8 +26,10 @@ class SQLiteProvider {
     final path = join(documentsDirectory.path, 'EvaluationsDB.db');
     print('path $path');
     File dbFile = File(path);
-    final size = await dbFile.length();
-    print('file size is $size bytes');
+    if (await dbFile.exists()) {
+      final size = await dbFile.length();
+      print('file size is $size bytes');
+    }
     // Database creation
     return await openDatabase(
       path,
