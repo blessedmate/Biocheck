@@ -109,7 +109,7 @@ class SignInView extends GetView<SignInController> {
                   const SizedBox(height: 15),
                   Center(
                     child: GestureDetector(
-                      onTap: () {},
+                      onTap: () => controller.goToSignUp(),
                       child: RichText(
                         text: const TextSpan(
                             text: 'Don\'t have an account?',
