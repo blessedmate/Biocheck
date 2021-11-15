@@ -15,8 +15,8 @@ class BeginEvaluationController extends GetxController
   final templatesCollection =
       FirebaseFirestore.instance.collection('templates');
 
-  List<Template> templates = [];
-  List<Template> templatesCopy = [];
+  RxList<Template> templates = RxList<Template>();
+  RxList<Template> templatesCopy = RxList<Template>();
 
   @override
   void onInit() {
@@ -24,17 +24,11 @@ class BeginEvaluationController extends GetxController
     loadTemplates();
   }
 
-  loadData() async {
-    change(null, status: RxStatus.loading());
-    final provider = TemplatesProvider();
-    change([], status: RxStatus.success());
-  }
-
   search(String text) {
     if (text == '') {
-      templates = templatesCopy;
+      templates.addAll(templatesCopy);
     } else {
-      templates = templates
+      templates.value = templates
           .where((element) =>
               element.title.toLowerCase().contains(text.toLowerCase()))
           .toList();
@@ -47,7 +41,7 @@ class BeginEvaluationController extends GetxController
     List<Template>? queriedTemplates = await SQLiteProvider.db.getTemplates();
     if (queriedTemplates != null) {
       print('got templates from sqlite');
-      templates = queriedTemplates;
+      templates.addAll(queriedTemplates);
       change(templates, status: RxStatus.success());
     }
 
@@ -58,8 +52,8 @@ class BeginEvaluationController extends GetxController
         Template current = Template.fromJson(e.data());
         current.id = getRandomString(32);
         templates.add(current);
+        templatesCopy.add(current);
       }
-      templatesCopy = templates;
       SQLiteProvider.db.saveTemplates(templates);
       change([], status: RxStatus.success());
     } catch (e) {
@@ -70,10 +64,10 @@ class BeginEvaluationController extends GetxController
     }
   }
 
-  tapOnEvaluationItem() async {
+  tapOnEvaluationItem(Template template) async {
     final mainController = Get.find<MainController>();
     mainController.startBatteryLevel = await Battery().batteryLevel;
-    Get.toNamed(Routes.NEW_EVALUATION);
+    Get.toNamed(Routes.NEW_EVALUATION, arguments: template);
   }
 
   // Used to generate random ids

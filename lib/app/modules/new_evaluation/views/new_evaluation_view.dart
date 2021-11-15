@@ -13,6 +13,10 @@ class NewEvaluationView extends GetView<NewEvaluationController> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
+      floatingActionButton: SaveAndPredictButton(
+        controller: controller,
+      ),
       appBar: AppBar(
         title: const Text(
           'Evaluation',
@@ -24,7 +28,7 @@ class NewEvaluationView extends GetView<NewEvaluationController> {
         child: Padding(
           padding: const EdgeInsets.symmetric(horizontal: 25),
           child: Column(
-            // crossAxisAlignment: CrossAxisAlignment.start,
+            crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               const SizedBox(height: 20),
 
@@ -70,10 +74,51 @@ class NewEvaluationView extends GetView<NewEvaluationController> {
                       controller.showWarning(controller.lastNameController)
                           ? _warningText()
                           : Container()),
-
+              // ...controller.template.questions
+              //     .map((e) => Column(
+              //             mainAxisAlignment: MainAxisAlignment.start,
+              //             crossAxisAlignment: CrossAxisAlignment.start,
+              //             children: [
+              //               const SizedBox(
+              //                 height: 10,
+              //               ),
+              //               Text(
+              //                 e,
+              //                 style: TextStyle(fontSize: 20),
+              //               ),
+              //               const SizedBox(
+              //                 height: 10,
+              //               ),
+              //               Row(
+              //                 children: [
+              //                   Row(
+              //                     children: [
+              //                       Text('Si'),
+              //                       Radio(
+              //                           value: 1,
+              //                           groupValue: 1,
+              //                           onChanged: (val) {}),
+              //                     ],
+              //                   ),
+              //                   Row(
+              //                     children: [
+              //                       Text('No'),
+              //                       Radio(
+              //                           value: 0,
+              //                           groupValue: 1,
+              //                           onChanged: (val) {}),
+              //                     ],
+              //                   ),
+              //                 ],
+              //               ),
+              //               const SizedBox(
+              //                 height: 20,
+              //               ),
+              //             ]))
+              //     .toList(),
               const SizedBox(height: 30),
-              // SectionsList(controller: controller),
-              SaveAndPredictButton(controller: controller),
+
+              // SaveAndPredictButton(controller: controller),
             ],
           ),
         ),
@@ -104,69 +149,69 @@ class NewEvaluationView extends GetView<NewEvaluationController> {
   }
 }
 
-class SectionsList extends StatelessWidget {
-  const SectionsList({Key? key, required this.controller}) : super(key: key);
-  final NewEvaluationController controller;
+// class SectionsList extends StatelessWidget {
+//   const SectionsList({Key? key, required this.controller}) : super(key: key);
+//   final NewEvaluationController controller;
 
-  @override
-  Widget build(BuildContext context) {
-    return SizedBox(
-      height: 250,
-      child: ListView.builder(
-        physics: const BouncingScrollPhysics(),
-        itemCount: 4,
-        scrollDirection: Axis.vertical,
-        itemBuilder: (_, index) =>
-            Section(title: 'Axial', controller: controller),
-      ),
-    );
-  }
-}
+//   @override
+//   Widget build(BuildContext context) {
+//     return SizedBox(
+//       height: 250,
+//       child: ListView.builder(
+//         physics: const BouncingScrollPhysics(),
+//         itemCount: 4,
+//         scrollDirection: Axis.vertical,
+//         itemBuilder: (_, index) =>
+//             Section(title: 'Axial', controller: controller),
+//       ),
+//     );
+//   }
+// }
 
-class Section extends StatelessWidget {
-  const Section({
-    Key? key,
-    required this.title,
-    required this.controller,
-  }) : super(key: key);
+// class Section extends StatelessWidget {
+//   const Section({
+//     Key? key,
+//     required this.title,
+//     required this.controller,
+//   }) : super(key: key);
 
-  final String title;
-  final NewEvaluationController controller;
+//   final String title;
+//   final NewEvaluationController controller;
 
-  @override
-  Widget build(BuildContext context) {
-    return GestureDetector(
-      onTap: () => controller.goToSectionDetail(),
-      child: Container(
-        height: 60,
-        margin: const EdgeInsets.symmetric(vertical: 10),
-        padding: const EdgeInsets.symmetric(horizontal: 20),
-        decoration: BoxDecoration(
-          borderRadius: BorderRadius.circular(10),
-          color: Colors.white,
-          boxShadow: const [
-            BoxShadow(
-                color: Colors.white10,
-                offset: Offset(0, 0),
-                blurRadius: 4,
-                spreadRadius: 1)
-          ],
-        ),
-        child: Row(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          children: [
-            Text(
-              title,
-              style: TypographyStyles.subtitle,
-            ),
-            const Icon(Icons.check_circle_outline,
-                color: Palette.secondaryColor),
-          ],
-        ),
-      ),
-    );
-  }
-}
+//   @override
+//   Widget build(BuildContext context) {
+//     return GestureDetector(
+//       onTap: () => controller.goToSectionDetail(),
+//       child: Container(
+//         height: 60,
+//         margin: const EdgeInsets.symmetric(vertical: 10),
+//         padding: const EdgeInsets.symmetric(horizontal: 20),
+//         decoration: BoxDecoration(
+//           borderRadius: BorderRadius.circular(10),
+//           color: Colors.white,
+//           boxShadow: const [
+//             BoxShadow(
+//                 color: Colors.white10,
+//                 offset: Offset(0, 0),
+//                 blurRadius: 4,
+//                 spreadRadius: 1)
+//           ],
+//         ),
+//         child: Row(
+//           mainAxisAlignment: MainAxisAlignment.spaceBetween,
+//           children: [
+//             Text(
+//               title,
+//               style: TypographyStyles.subtitle,
+//             ),
+//             const Icon(Icons.check_circle_outline,
+//                 color: Palette.secondaryColor),
+//           ],
+//         ),
+//       ),
+//     );
+//   }
+// }
 
 class SaveAndPredictButton extends StatelessWidget {
   const SaveAndPredictButton({
@@ -180,12 +225,12 @@ class SaveAndPredictButton extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       margin: const EdgeInsets.symmetric(vertical: 25),
-      width: double.infinity,
+      width: Get.width * 0.9,
       height: 65,
       child: ElevatedButton(
         onPressed: () => controller.submit(),
         child: const Text(
-          'Save & Predict',
+          'Save',
           style: TypographyStyles.bigbuttons,
         ),
         style: ElevatedButton.styleFrom(

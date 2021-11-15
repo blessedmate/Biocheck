@@ -61,17 +61,19 @@ class BeginEvaluationView extends GetView<BeginEvaluationController> {
           MediaQuery.of(Get.context!).padding.top -
           appbar.preferredSize.height -
           100,
-      child: ListView.builder(
-        itemCount: controller.templates.length,
-        itemBuilder: (_, int index) =>
-            _newEvaluation(controller.templates[index]),
+      child: Obx(
+        () => ListView.builder(
+          itemCount: controller.templates.length,
+          itemBuilder: (_, int index) =>
+              _newEvaluation(controller.templates[index]),
+        ),
       ),
     );
   }
 
   Widget _newEvaluation(Template templateModel) {
     return GestureDetector(
-      onTap: () => controller.tapOnEvaluationItem(),
+      onTap: () => controller.tapOnEvaluationItem(templateModel),
       child: Container(
           height: 80,
           padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 15),
