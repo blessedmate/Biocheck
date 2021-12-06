@@ -2,20 +2,22 @@ import 'package:biocheck_flutter/app/utils/palette.dart';
 import 'package:flutter/material.dart';
 
 class CustomInput extends StatelessWidget {
-  final Widget icon;
+  final Widget? icon;
   final String labelText;
   // final ValueSetter<String> onChanged;
   final Function(String)? onChanged;
   final Function()? onTap;
   final TextEditingController? textController;
+  final Widget? suffixIcon;
   final bool readOnly;
   const CustomInput({
     Key? key,
-    required this.icon,
+    this.icon,
     required this.labelText,
     this.onChanged,
     this.onTap,
     this.textController,
+    this.suffixIcon,
     this.readOnly = false,
   }) : super(key: key);
 
@@ -42,6 +44,7 @@ class CustomInput extends StatelessWidget {
               readOnly: readOnly,
               controller: textController,
               decoration: InputDecoration(
+                  suffixIcon: suffixIcon ?? const SizedBox(),
                   labelText: labelText,
                   labelStyle: const TextStyle(color: Palette.primaryColor),
                   border: InputBorder.none,
@@ -49,7 +52,7 @@ class CustomInput extends StatelessWidget {
                   enabledBorder: InputBorder.none,
                   errorBorder: InputBorder.none,
                   disabledBorder: InputBorder.none,
-                  icon: icon),
+                  icon: icon ?? const SizedBox()),
             )),
       ),
     );
