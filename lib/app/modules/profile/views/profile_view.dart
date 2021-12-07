@@ -15,45 +15,55 @@ class ProfileView extends GetView<ProfileController> {
       appBar: AppBar(
         title: const Text('Profile'),
       ),
-      body: SingleChildScrollView(
-        physics: const BouncingScrollPhysics(),
-        padding: EdgeInsets.symmetric(horizontal: 20),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            const SizedBox(height: 40),
-            const _ProfilePicture(),
-            const SizedBox(height: 40),
-            const CustomInput(labelText: 'Name'),
-            const SizedBox(height: 30),
-            const CustomInput(
-              labelText: 'Email',
-              suffixIcon: Icon(
-                Icons.lock_outline,
-                color: Palette.primaryColor,
-              ),
+      body: controller.obx(
+        (state) {
+          return SingleChildScrollView(
+            physics: const BouncingScrollPhysics(),
+            padding: const EdgeInsets.symmetric(horizontal: 20),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                const SizedBox(height: 40),
+                const _ProfilePicture(),
+                const SizedBox(height: 30),
+                CustomInput(
+                  labelText: 'Name',
+                  textController:
+                      TextEditingController(text: controller.currentUser!.name),
+                ),
+                const SizedBox(height: 30),
+                CustomInput(
+                  labelText: 'Email',
+                  suffixIcon: const Icon(
+                    Icons.lock_outline,
+                    color: Palette.primaryColor,
+                  ),
+                  textController: TextEditingController(
+                      text: controller.currentUser!.email),
+                ),
+                const SizedBox(height: 30),
+                const Text(
+                  'Password',
+                  style: TextStyle(fontWeight: FontWeight.w500),
+                ),
+                const Text('*********'),
+                GestureDetector(
+                  onTap: () {},
+                  child: const Text(
+                    'Forgot your password?',
+                    style: TextStyle(fontSize: 14, color: Palette.primaryColor),
+                  ),
+                ),
+                const SizedBox(height: 30),
+                const Text(
+                  'Workplace',
+                  style: TextStyle(fontWeight: FontWeight.w500),
+                ),
+                Text(controller.currentUser!.hospital.name),
+              ],
             ),
-            const SizedBox(height: 30),
-            const Text(
-              'Password',
-              style: TextStyle(fontWeight: FontWeight.w500),
-            ),
-            const Text('*********'),
-            GestureDetector(
-              onTap: () {},
-              child: const Text(
-                'Forgot your password?',
-                style: TextStyle(fontSize: 14, color: Palette.primaryColor),
-              ),
-            ),
-            const SizedBox(height: 30),
-            const Text(
-              'Workplace',
-              style: TextStyle(fontWeight: FontWeight.w500),
-            ),
-            const Text('Hospital Santa Fe'),
-          ],
-        ),
+          );
+        },
       ),
     );
   }
