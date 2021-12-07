@@ -2,6 +2,8 @@ import 'package:get/get.dart';
 
 import 'package:biocheck_flutter/app/modules/begin_evaluation/bindings/begin_evaluation_binding.dart';
 import 'package:biocheck_flutter/app/modules/begin_evaluation/views/begin_evaluation_view.dart';
+import 'package:biocheck_flutter/app/modules/contacts/bindings/contacts_binding.dart';
+import 'package:biocheck_flutter/app/modules/contacts/views/contacts_view.dart';
 import 'package:biocheck_flutter/app/modules/evaluations/bindings/evaluations_binding.dart';
 import 'package:biocheck_flutter/app/modules/evaluations/views/evaluations_view.dart';
 import 'package:biocheck_flutter/app/modules/home/bindings/home_binding.dart';
@@ -10,6 +12,8 @@ import 'package:biocheck_flutter/app/modules/new_evaluation/bindings/new_evaluat
 import 'package:biocheck_flutter/app/modules/new_evaluation/views/new_evaluation_view.dart';
 import 'package:biocheck_flutter/app/modules/new_evaluation_detail/bindings/new_evaluation_detail_binding.dart';
 import 'package:biocheck_flutter/app/modules/new_evaluation_detail/views/new_evaluation_detail_view.dart';
+import 'package:biocheck_flutter/app/modules/profile/bindings/profile_binding.dart';
+import 'package:biocheck_flutter/app/modules/profile/views/profile_view.dart';
 import 'package:biocheck_flutter/app/modules/risk_assessment/bindings/risk_assessment_binding.dart';
 import 'package:biocheck_flutter/app/modules/risk_assessment/views/risk_assessment_view.dart';
 import 'package:biocheck_flutter/app/modules/sign_in/bindings/sign_in_binding.dart';
@@ -64,6 +68,16 @@ class AppPages {
       name: _Paths.NEW_EVALUATION_DETAIL,
       page: () => NewEvaluationDetailView(),
       binding: NewEvaluationDetailBinding(),
+    ),
+    GetPage(
+      name: _Paths.CONTACTS,
+      page: () => ContactsView(),
+      binding: ContactsBinding(),
+    ),
+    GetPage(
+      name: _Paths.PROFILE,
+      page: () => ProfileView(),
+      binding: ProfileBinding(),
     ),
   ];
 }

@@ -12,6 +12,8 @@ abstract class Routes {
   static const SIGN_UP = _Paths.SIGN_UP;
   static const RISK_ASSESSMENT = _Paths.RISK_ASSESSMENT;
   static const NEW_EVALUATION_DETAIL = _Paths.NEW_EVALUATION_DETAIL;
+  static const CONTACTS = _Paths.CONTACTS;
+  static const PROFILE = _Paths.PROFILE;
 }
 
 abstract class _Paths {
@@ -23,4 +25,6 @@ abstract class _Paths {
   static const SIGN_UP = '/sign-up';
   static const RISK_ASSESSMENT = '/risk-assessment';
   static const NEW_EVALUATION_DETAIL = '/new-evaluation-detail';
+  static const CONTACTS = '/contacts';
+  static const PROFILE = '/profile';
 }

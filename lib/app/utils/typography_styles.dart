@@ -31,4 +31,13 @@ class TypographyStyles {
       fontFamily: 'Airbnb',
       fontWeight: FontWeight.w400,
       color: Palette.primaryColor);
+
+  static const contactName = TextStyle(
+      fontSize: 18,
+      fontFamily: 'Airbnb',
+      fontWeight: FontWeight.w600,
+      color: Palette.primaryColor);
+
+  static const contactSpecialty =
+      TextStyle(fontSize: 18, fontFamily: 'Airbnb', color: Colors.black);
 }

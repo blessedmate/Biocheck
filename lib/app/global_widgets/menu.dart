@@ -37,7 +37,7 @@ class Menu extends StatelessWidget {
             ),
             ListTile(
               title: const Text('Profile'),
-              onTap: () {},
+              onTap: () => Get.toNamed(Routes.PROFILE),
             ),
             ListTile(
               title: const Text('Settings'),
@@ -45,7 +45,7 @@ class Menu extends StatelessWidget {
             ),
             ListTile(
               title: const Text('Contacts'),
-              onTap: () {},
+              onTap: () => Get.toNamed(Routes.CONTACTS),
             ),
             const Expanded(child: SizedBox()),
             const Divider(thickness: 2),
