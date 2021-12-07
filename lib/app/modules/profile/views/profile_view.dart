@@ -4,6 +4,7 @@ import 'package:biocheck_flutter/app/utils/typography_styles.dart';
 import 'package:flutter/material.dart';
 
 import 'package:get/get.dart';
+import 'package:image_picker/image_picker.dart';
 
 import '../controllers/profile_controller.dart';
 
@@ -20,9 +21,9 @@ class ProfileView extends GetView<ProfileController> {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            const SizedBox(height: 50),
+            const SizedBox(height: 40),
             const _ProfilePicture(),
-            const SizedBox(height: 50),
+            const SizedBox(height: 40),
             const CustomInput(labelText: 'Name'),
             const SizedBox(height: 30),
             const CustomInput(
@@ -33,17 +34,23 @@ class ProfileView extends GetView<ProfileController> {
               ),
             ),
             const SizedBox(height: 30),
-            const Text('Password'),
+            const Text(
+              'Password',
+              style: TextStyle(fontWeight: FontWeight.w500),
+            ),
             const Text('*********'),
-            TextButton(
-              onPressed: () {},
+            GestureDetector(
+              onTap: () {},
               child: const Text(
                 'Forgot your password?',
-                style: TypographyStyles.signIn,
+                style: TextStyle(fontSize: 14, color: Palette.primaryColor),
               ),
             ),
-            const SizedBox(height: 20),
-            const Text('Workplace'),
+            const SizedBox(height: 30),
+            const Text(
+              'Workplace',
+              style: TextStyle(fontWeight: FontWeight.w500),
+            ),
             const Text('Hospital Santa Fe'),
           ],
         ),
@@ -74,7 +81,14 @@ class _ProfilePicture extends StatelessWidget {
             ),
           ),
           TextButton(
-              onPressed: () {},
+              onPressed: () async {
+                final ImagePicker _picker = ImagePicker();
+                // Pick an image
+                final XFile? image =
+                    await _picker.pickImage(source: ImageSource.gallery);
+
+                // TODO: Upload image to backend
+              },
               child: const Text(
                 'Change profile picture',
                 style: TypographyStyles.signIn,
