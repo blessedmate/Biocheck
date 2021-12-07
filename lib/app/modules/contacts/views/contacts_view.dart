@@ -27,9 +27,7 @@ class ContactsView extends GetView<ContactsController> {
               labelText: 'Search contact',
             ),
             const SizedBox(height: 20),
-            SizedBox(
-              // TODO: Fix height
-              height: 600,
+            Expanded(
               child: ListView.builder(
                 physics: const BouncingScrollPhysics(),
                 itemCount: 10,
@@ -58,15 +56,22 @@ class _ContactCard extends StatelessWidget {
       margin: const EdgeInsets.symmetric(vertical: 20, horizontal: 10),
       child: Row(
         children: [
-          Container(
-            height: 70,
-            width: 70,
-            decoration: const BoxDecoration(
-              shape: BoxShape.circle,
-              image: DecorationImage(
-                  fit: BoxFit.cover,
-                  image: NetworkImage(
-                      'https://res.cloudinary.com/dkwnvvjcs/image/upload/v1638826864/biocheck/face_hqh6zy.jpg')),
+          ClipRRect(
+            borderRadius: BorderRadius.circular(100),
+            child: FadeInImage(
+              fit: BoxFit.cover,
+              height: 70,
+              width: 70,
+              placeholder: const AssetImage('assets/images/no-image.png'),
+              image: const NetworkImage(
+                  'https://res.cloudinary.com/dkwnvvjcs/image/upload/v1638826864/biocheck/face_hqh6zy.jpg'),
+              imageErrorBuilder: (context, error, stackTrace) {
+                return const Image(
+                    height: 70,
+                    width: 70,
+                    fit: BoxFit.cover,
+                    image: AssetImage('assets/images/no-image.png'));
+              },
             ),
           ),
           const SizedBox(width: 25),
