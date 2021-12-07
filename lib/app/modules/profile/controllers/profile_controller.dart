@@ -1,12 +1,12 @@
-import 'dart:convert';
-
 import 'package:biocheck_flutter/app/data/models/models.dart';
-import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:biocheck_flutter/app/modules/profile/providers/profile_provider.dart';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
 
 class ProfileController extends GetxController with StateMixin<User> {
   User? currentUser;
+
+  final provider = ProfileProvider();
 
   @override
   void onInit() {
@@ -21,9 +21,8 @@ class ProfileController extends GetxController with StateMixin<User> {
 
     final box = GetStorage();
     final userId = box.read('userId');
-    CollectionReference users = FirebaseFirestore.instance.collection('users');
-    final response = await users.doc(userId).get();
-    currentUser = User.fromJson(jsonEncode(response.data()));
+
+    currentUser = await provider.getProfileById(userId);
 
     // User is loaded
     change(currentUser, status: RxStatus.success());

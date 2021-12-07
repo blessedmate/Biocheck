@@ -1,3 +1,4 @@
+import 'package:biocheck_flutter/app/data/models/models.dart';
 import 'package:biocheck_flutter/app/global_widgets/global_widgets.dart';
 import 'package:biocheck_flutter/app/utils/palette.dart';
 import 'package:biocheck_flutter/app/utils/typography_styles.dart';
@@ -13,6 +14,7 @@ class ContactsView extends GetView<ContactsController> {
 
   @override
   Widget build(BuildContext context) {
+    controller;
     return Scaffold(
       appBar: AppBar(
         title: const Text('Contacts'),
@@ -27,15 +29,17 @@ class ContactsView extends GetView<ContactsController> {
               labelText: 'Search contact',
             ),
             const SizedBox(height: 20),
-            Expanded(
-              child: ListView.builder(
-                physics: const BouncingScrollPhysics(),
-                itemCount: 10,
-                itemBuilder: (_, index) {
-                  return _ContactCard();
-                },
+            controller.obx(
+              (state) => Expanded(
+                child: ListView.builder(
+                  physics: const BouncingScrollPhysics(),
+                  itemCount: controller.contacts.length,
+                  itemBuilder: (_, index) {
+                    return _ContactCard(contact: controller.contacts[index]);
+                  },
+                ),
               ),
-            )
+            ),
           ],
         ),
       ),
@@ -44,8 +48,11 @@ class ContactsView extends GetView<ContactsController> {
 }
 
 class _ContactCard extends StatelessWidget {
+  final User contact;
+
   const _ContactCard({
     Key? key,
+    required this.contact,
   }) : super(key: key);
 
   @override
@@ -63,27 +70,27 @@ class _ContactCard extends StatelessWidget {
               height: 70,
               width: 70,
               placeholder: const AssetImage('assets/images/no-image.png'),
-              image: const NetworkImage(
-                  'https://res.cloudinary.com/dkwnvvjcs/image/upload/v1638826864/biocheck/face_hqh6zy.jpg'),
+              image: NetworkImage(contact.imageUrl!),
               imageErrorBuilder: (context, error, stackTrace) {
                 return const Image(
-                    height: 70,
-                    width: 70,
-                    fit: BoxFit.cover,
-                    image: AssetImage('assets/images/no-image.png'));
+                  height: 70,
+                  width: 70,
+                  fit: BoxFit.cover,
+                  image: AssetImage('assets/images/no-image.png'),
+                );
               },
             ),
           ),
           const SizedBox(width: 25),
           Column(
             crossAxisAlignment: CrossAxisAlignment.start,
-            children: const [
+            children: [
               Text(
-                'Nicolas Posh',
+                contact.name,
                 style: TypographyStyles.contactName,
               ),
               Text(
-                'Otolaryngology',
+                contact.specialty,
                 style: TypographyStyles.contactSpecialty,
               ),
             ],
@@ -91,7 +98,7 @@ class _ContactCard extends StatelessWidget {
           const Expanded(child: SizedBox()),
           IconButton(
             onPressed: () {
-              controller.sendMail('mate@mail.com');
+              controller.sendMail(contact.email);
             },
             icon: const Icon(Icons.email_outlined),
           ),
