@@ -1,6 +1,7 @@
 import 'dart:io';
 
 import 'package:biocheck_flutter/app/data/models/models.dart';
+import 'package:biocheck_flutter/app/utils/randomid.dart';
 import 'package:path/path.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:sqflite/sqflite.dart';
@@ -33,7 +34,7 @@ class SQLiteProvider {
     // Database creation
     return await openDatabase(
       path,
-      version: 5,
+      version: 6,
       onOpen: (db) {},
       onCreate: (Database db, int version) async {
         await db.execute('''
@@ -49,6 +50,12 @@ class SQLiteProvider {
           id TEXT PRIMARY KEY,
           title TEXT,
           specialty TEXT
+        )
+      ''');
+        await db.execute('''
+        CREATE TABLE Contacts(
+          id TEXT PRIMARY KEY,
+          json TEXT
         )
       ''');
       },
@@ -149,6 +156,34 @@ class SQLiteProvider {
           'id': t.id,
           'title': t.title,
           'specialty': t.specialty,
+        },
+        conflictAlgorithm: ConflictAlgorithm.replace,
+      );
+    }
+
+    return res;
+  }
+
+  // GET CONTACTS
+  Future<List<User>?> getContacts() async {
+    final db = await database;
+    final response = await db.query('Contacts');
+    return response.isNotEmpty
+        ? response.map((e) => User.fromJson(e['json'].toString())).toList()
+        : null;
+  }
+
+  // SAVE CONTACTS LIST
+  Future<int> saveContacts(List<User> contactsList) async {
+    final db = await database;
+    int res = 1;
+
+    for (var c in contactsList) {
+      res = await db.insert(
+        'Contacts',
+        {
+          'id': RandomId.getRandomString(32),
+          'json': c.toJson(),
         },
         conflictAlgorithm: ConflictAlgorithm.replace,
       );
