@@ -1,8 +1,11 @@
 import 'package:biocheck_flutter/app/modules/sign_up/providers/auth_provider.dart';
 import 'package:biocheck_flutter/app/routes/app_pages.dart';
 import 'package:get/get.dart';
+import 'package:get_storage/get_storage.dart';
 
 class SignUpController extends GetxController {
+  final box = GetStorage();
+
   final _loading = false.obs;
   bool get loading => _loading.value;
   set loading(bool newValue) => _loading.value = newValue;
