@@ -13,7 +13,9 @@ class SignUpView extends GetView<SignUpController> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(),
+      appBar: AppBar(
+        backgroundColor: Palette.primaryColor,
+      ),
       body: SingleChildScrollView(
         physics:
             const BouncingScrollPhysics(parent: NeverScrollableScrollPhysics()),
@@ -28,14 +30,14 @@ class SignUpView extends GetView<SignUpController> {
                 'Sign up',
                 style: TypographyStyles.title,
               ),
-              const SizedBox(
-                height: 40,
-              ),
-              CustomInput(
-                icon: const FaIcon(FontAwesomeIcons.user),
-                labelText: 'Username',
-                onChanged: (val) => controller.username = val,
-              ),
+              // const SizedBox(
+              //   height: 40,
+              // ),
+              // CustomInput(
+              //   icon: const FaIcon(FontAwesomeIcons.user),
+              //   labelText: 'Username',
+              //   onChanged: (val) => controller.username = val,
+              // ),
               const SizedBox(
                 height: 25,
               ),

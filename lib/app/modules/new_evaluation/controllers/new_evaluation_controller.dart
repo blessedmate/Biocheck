@@ -69,24 +69,21 @@ class NewEvaluationController extends GetxController {
     final dueDate = dateController.text;
 
     final userId = box.read('userId');
-    final token = box.read('token');
-
+    Template template;
     if (dueDate != '' && firstName != '' && lastName != '') {
       Evaluation evaluation = Evaluation(
         patientFirstName: firstName,
         patientLastName: lastName,
         dueDate: dueDate,
-        userId: userId,
-        template: EvaluationTemplate(name: 'Cardio Exam'),
+        userId: 0,
+        template: EvaluationTemplate(name: template.title),
       );
       try {
-        final Response response =
-            await provider.uploadEvaluation(evaluation, token);
+        final response = await provider.uploadEvaluation(evaluation, userId);
 
         // Save locally
-        Evaluation evalFromResponse = Evaluation.fromMap(response.body);
-        evalFromResponse.sent = true;
-        await SQLiteProvider.db.saveEvaluation(evalFromResponse);
+        response.sent = true;
+        await SQLiteProvider.db.saveEvaluation(response);
 
         // Update UI
         final evaluationsController = Get.find<EvaluationsController>();

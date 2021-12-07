@@ -39,25 +39,15 @@ class SignUpController extends GetxController {
 
     final provider = AuthProvider();
 
-    if (username == '') {
+    try {
+      await provider.signUp(email, password);
+      Get.snackbar('Succesful registration', 'Sign in to continue',
+          snackPosition: SnackPosition.BOTTOM,
+          duration: const Duration(seconds: 4));
+      Get.offAllNamed(Routes.SIGN_IN);
+    } catch (e) {
       error = true;
-      message = 'Username can\'t be empty';
-    } else if (email == '') {
-      error = true;
-      message = 'Email can\'t be empty';
-    } else if (password == '') {
-      error = true;
-      message = 'Password can\'t be empty';
-    }
-    if (!error) {
-      Response resp =
-          await provider.signUp(name, email, username, password, institution);
-      if (resp.statusCode == 201) {
-        Get.offAndToNamed(Routes.EVALUATIONS);
-      } else {
-        error = true;
-        message = resp.body['message'];
-      }
+      message = e.toString().split(":")[1];
     }
     loading = false;
     update(['warning']);

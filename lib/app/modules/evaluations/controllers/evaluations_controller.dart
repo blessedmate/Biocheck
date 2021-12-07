@@ -38,7 +38,6 @@ class EvaluationsController extends GetxController
     change(null, status: RxStatus.loading());
 
     final userId = box.read('userId');
-    final token = box.read('token');
 
     // Request evaluations from local DB first
     List<Evaluation>? evals = await SQLiteProvider.db.getAllEvaluations();
@@ -47,7 +46,7 @@ class EvaluationsController extends GetxController
       evaluationsList = evals;
       change(evaluationsList, status: RxStatus.success());
     }
-    getEvaluationsFromBackend(userId, token);
+    getEvaluationsFromBackend(userId);
   }
 
   sendPendingEvaluations() async {
@@ -63,7 +62,7 @@ class EvaluationsController extends GetxController
           await tempProvider.uploadEvaluation(e, token);
         });
         SQLiteProvider.db.deleteEvaluations(pendingEvals);
-        await getEvaluationsFromBackend(userId, token);
+        await getEvaluationsFromBackend(userId);
       }
     } catch (e) {
       print(e);
@@ -71,18 +70,12 @@ class EvaluationsController extends GetxController
   }
 
   // Request evaluations from backend
-  getEvaluationsFromBackend(int userId, String token) async {
+  getEvaluationsFromBackend(String userId) async {
     try {
-      final Response response = await provider.getEvaluations(userId, token);
-      if (response.statusCode == null) {
-        throw Exception('No internet');
-      }
-      evaluationsList.clear();
-      response.body.forEach((value) {
-        final currentEval = Evaluation.fromMap(value);
-        evaluationsList.add(currentEval);
-      });
+      final list = await provider.getEvaluations(userId);
 
+      evaluationsList.clear();
+      evaluationsList.addAll(list);
       if (evaluationsList.isEmpty) {
         change(evaluationsList, status: RxStatus.empty());
       } else {
@@ -96,4 +89,29 @@ class EvaluationsController extends GetxController
           duration: const Duration(seconds: 5));
     }
   }
+  // getEvaluationsFromBackend(String userId) async {
+  //   try {
+  //     final Response response = await provider.getEvaluations(userId);
+  //     if (response.statusCode == null) {
+  //       throw Exception('No internet');
+  //     }
+  //     evaluationsList.clear();
+  //     response.body.forEach((value) {
+  //       final currentEval = Evaluation.fromMap(value);
+  //       evaluationsList.add(currentEval);
+  //     });
+
+  //     if (evaluationsList.isEmpty) {
+  //       change(evaluationsList, status: RxStatus.empty());
+  //     } else {
+  //       SQLiteProvider.db.saveEvaluations(evaluationsList);
+  //       change(evaluationsList, status: RxStatus.success());
+  //     }
+  //   } catch (e) {
+  //     change(evaluationsList, status: RxStatus.success());
+  //     Get.snackbar('No internet connection', 'Displaying older evaluations',
+  //         snackPosition: SnackPosition.BOTTOM,
+  //         duration: const Duration(seconds: 5));
+  //   }
+  // }
 }

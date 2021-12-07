@@ -14,7 +14,7 @@ class EvaluationTemplate {
 
   factory EvaluationTemplate.fromMap(Map<String, dynamic> json) =>
       EvaluationTemplate(
-        name: json["name"],
+        name: json["name"] ?? '',
       );
 
   Map<String, dynamic> toMap() => {
