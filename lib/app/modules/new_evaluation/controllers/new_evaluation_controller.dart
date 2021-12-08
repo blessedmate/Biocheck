@@ -7,6 +7,7 @@ import 'package:biocheck_flutter/app/modules/evaluations/controllers/evaluations
 import 'package:biocheck_flutter/app/modules/new_evaluation/providers/new_eval_provider.dart';
 import 'package:biocheck_flutter/app/providers/sqlite_provider.dart';
 import 'package:biocheck_flutter/app/routes/app_pages.dart';
+import 'package:biocheck_flutter/app/utils/randomid.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
@@ -100,7 +101,7 @@ class NewEvaluationController extends GetxController {
         Get.offAndToNamed(Routes.EVALUATIONS);
       } catch (e) {
         // Save locally as an unsent evaluation (queue)
-        evaluation.id = getRandomString(32);
+        evaluation.id = RandomId.getRandomString(32);
         evaluation.sent = false;
         await SQLiteProvider.db.saveEvaluation(evaluation);
         print(e);
