@@ -1,7 +1,5 @@
 import 'package:biocheck_flutter/app/global_widgets/input.dart';
 import 'package:biocheck_flutter/app/global_widgets/primary_button.dart';
-import 'package:biocheck_flutter/app/routes/app_pages.dart';
-import 'package:biocheck_flutter/app/utils/palette.dart';
 import 'package:biocheck_flutter/app/utils/typography_styles.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/cupertino.dart';

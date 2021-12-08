@@ -1,10 +1,8 @@
 import 'dart:math';
 
 import 'package:battery_plus/battery_plus.dart';
-import 'package:biocheck_flutter/app/data/models/evaluation.dart';
 import 'package:biocheck_flutter/app/data/models/template.dart';
 import 'package:biocheck_flutter/app/global_widgets/controllers/main_controller.dart';
-import 'package:biocheck_flutter/app/modules/begin_evaluation/providers/templates_provider.dart';
 import 'package:biocheck_flutter/app/providers/sqlite_provider.dart';
 import 'package:biocheck_flutter/app/routes/app_pages.dart';
 import 'package:get/get.dart';

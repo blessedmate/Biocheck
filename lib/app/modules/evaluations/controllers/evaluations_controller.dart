@@ -3,7 +3,6 @@ import 'package:biocheck_flutter/app/modules/evaluations/providers/evaluations_p
 import 'package:biocheck_flutter/app/modules/new_evaluation/providers/new_eval_provider.dart';
 import 'package:biocheck_flutter/app/providers/sqlite_provider.dart';
 import 'package:biocheck_flutter/app/routes/app_pages.dart';
-import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
 
