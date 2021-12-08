@@ -85,6 +85,6 @@ class SignInController extends GetxController {
   }
 
   goToSignUp() {
-    Get.offAndToNamed(Routes.SIGN_UP);
+    Get.toNamed(Routes.SIGN_UP);
   }
 }
