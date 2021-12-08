@@ -14,6 +14,7 @@ abstract class Routes {
   static const NEW_EVALUATION_DETAIL = _Paths.NEW_EVALUATION_DETAIL;
   static const CONTACTS = _Paths.CONTACTS;
   static const PROFILE = _Paths.PROFILE;
+  static const SETTINGS = _Paths.SETTINGS;
 }
 
 abstract class _Paths {
@@ -27,4 +28,5 @@ abstract class _Paths {
   static const NEW_EVALUATION_DETAIL = '/new-evaluation-detail';
   static const CONTACTS = '/contacts';
   static const PROFILE = '/profile';
+  static const SETTINGS = '/settings';
 }

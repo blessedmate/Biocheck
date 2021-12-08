@@ -41,7 +41,7 @@ class Menu extends StatelessWidget {
             ),
             ListTile(
               title: const Text('Settings'),
-              onTap: () {},
+              onTap: () => Get.toNamed(Routes.SETTINGS),
             ),
             ListTile(
               title: const Text('Contacts'),
