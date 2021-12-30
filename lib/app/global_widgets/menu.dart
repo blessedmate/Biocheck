@@ -37,15 +37,15 @@ class Menu extends StatelessWidget {
             ),
             ListTile(
               title: const Text('Profile'),
-              onTap: () {},
+              onTap: () => Get.toNamed(Routes.PROFILE),
             ),
             ListTile(
               title: const Text('Settings'),
-              onTap: () {},
+              onTap: () => Get.toNamed(Routes.SETTINGS),
             ),
             ListTile(
               title: const Text('Contacts'),
-              onTap: () {},
+              onTap: () => Get.toNamed(Routes.CONTACTS),
             ),
             const Expanded(child: SizedBox()),
             const Divider(thickness: 2),

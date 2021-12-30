@@ -3,7 +3,6 @@ import 'package:biocheck_flutter/app/modules/evaluations/providers/evaluations_p
 import 'package:biocheck_flutter/app/modules/new_evaluation/providers/new_eval_provider.dart';
 import 'package:biocheck_flutter/app/providers/sqlite_provider.dart';
 import 'package:biocheck_flutter/app/routes/app_pages.dart';
-import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
 
@@ -38,7 +37,6 @@ class EvaluationsController extends GetxController
     change(null, status: RxStatus.loading());
 
     final userId = box.read('userId');
-    final token = box.read('token');
 
     // Request evaluations from local DB first
     List<Evaluation>? evals = await SQLiteProvider.db.getAllEvaluations();
@@ -47,7 +45,7 @@ class EvaluationsController extends GetxController
       evaluationsList = evals;
       change(evaluationsList, status: RxStatus.success());
     }
-    getEvaluationsFromBackend(userId, token);
+    getEvaluationsFromBackend(userId);
   }
 
   sendPendingEvaluations() async {
@@ -63,7 +61,7 @@ class EvaluationsController extends GetxController
           await tempProvider.uploadEvaluation(e, token);
         });
         SQLiteProvider.db.deleteEvaluations(pendingEvals);
-        await getEvaluationsFromBackend(userId, token);
+        await getEvaluationsFromBackend(userId);
       }
     } catch (e) {
       print(e);
@@ -71,18 +69,12 @@ class EvaluationsController extends GetxController
   }
 
   // Request evaluations from backend
-  getEvaluationsFromBackend(int userId, String token) async {
+  getEvaluationsFromBackend(String userId) async {
     try {
-      final Response response = await provider.getEvaluations(userId, token);
-      if (response.statusCode == null) {
-        throw Exception('No internet');
-      }
-      evaluationsList.clear();
-      response.body.forEach((value) {
-        final currentEval = Evaluation.fromMap(value);
-        evaluationsList.add(currentEval);
-      });
+      final list = await provider.getEvaluations(userId);
 
+      evaluationsList.clear();
+      evaluationsList.addAll(list);
       if (evaluationsList.isEmpty) {
         change(evaluationsList, status: RxStatus.empty());
       } else {

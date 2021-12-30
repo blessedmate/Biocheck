@@ -2,10 +2,20 @@
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0">
 <dict>
+	<key>LSApplicationQueriesSchemes</key>
+	<array>
+  	<string>mailto</string>
+	</array>
 	<key>CFBundleDevelopmentRegion</key>
 	<string>$(DEVELOPMENT_LANGUAGE)</string>
 	<key>CFBundleDisplayName</key>
 	<string>Biocheck</string>
+	<key>NSPhotoLibraryUsageDescription</key>
+	<string>Need access to gallery to pick images</string>
+	<key>NSCameraUsageDescription</key>
+	<string>Need access to camera to take pictures</string>
+	<key>NSMicrophoneUsageDescription</key>
+	<string>Need access to microphone to record videos</string>
 	<key>CFBundleExecutable</key>
 	<string>$(EXECUTABLE_NAME)</string>
 	<key>CFBundleIdentifier</key>

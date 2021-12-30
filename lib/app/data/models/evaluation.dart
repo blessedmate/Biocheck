@@ -34,11 +34,11 @@ class Evaluation {
   String toJson() => json.encode(toMap());
 
   factory Evaluation.fromMap(Map<String, dynamic> json) => Evaluation(
-        id: json["_id"],
-        userId: json["user_id"],
-        patientFirstName: json["patient_firstName"],
-        patientLastName: json["patient_lastName"],
-        dueDate: json["due_date"],
+        id: json["id"] ?? '',
+        userId: json["user_id"] ?? 0,
+        patientFirstName: json["patient_firstName"] ?? '',
+        patientLastName: json["patient_lastName"] ?? '',
+        dueDate: json["due_date"] ?? '',
         template: EvaluationTemplate.fromMap(json["information"]),
         sent: json["sent"] ?? true,
       );

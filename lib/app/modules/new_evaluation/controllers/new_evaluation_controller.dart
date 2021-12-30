@@ -7,6 +7,7 @@ import 'package:biocheck_flutter/app/modules/evaluations/controllers/evaluations
 import 'package:biocheck_flutter/app/modules/new_evaluation/providers/new_eval_provider.dart';
 import 'package:biocheck_flutter/app/providers/sqlite_provider.dart';
 import 'package:biocheck_flutter/app/routes/app_pages.dart';
+import 'package:biocheck_flutter/app/utils/randomid.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
@@ -23,8 +24,6 @@ class NewEvaluationController extends GetxController {
   final dateController = TextEditingController();
   final firstNameController = TextEditingController();
   final lastNameController = TextEditingController();
-
-  // List<RxInt>
 
   @override
   void onInit() {
@@ -78,24 +77,20 @@ class NewEvaluationController extends GetxController {
     final dueDate = dateController.text;
 
     final userId = box.read('userId');
-    final token = box.read('token');
-
     if (dueDate != '' && firstName != '' && lastName != '') {
       Evaluation evaluation = Evaluation(
         patientFirstName: firstName,
         patientLastName: lastName,
         dueDate: dueDate,
-        userId: userId,
-        template: EvaluationTemplate(name: 'Cardio Exam'),
+        userId: 0,
+        template: EvaluationTemplate(name: template.title),
       );
       try {
-        final Response response =
-            await provider.uploadEvaluation(evaluation, token);
+        final response = await provider.uploadEvaluation(evaluation, userId);
 
         // Save locally
-        Evaluation evalFromResponse = Evaluation.fromMap(response.body);
-        evalFromResponse.sent = true;
-        await SQLiteProvider.db.saveEvaluation(evalFromResponse);
+        response.sent = true;
+        await SQLiteProvider.db.saveEvaluation(response);
 
         // Update UI
         final evaluationsController = Get.find<EvaluationsController>();
@@ -104,7 +99,7 @@ class NewEvaluationController extends GetxController {
         Get.offAndToNamed(Routes.EVALUATIONS);
       } catch (e) {
         // Save locally as an unsent evaluation (queue)
-        evaluation.id = getRandomString(32);
+        evaluation.id = RandomId.getRandomString(32);
         evaluation.sent = false;
         await SQLiteProvider.db.saveEvaluation(evaluation);
         print(e);

@@ -1,12 +1,15 @@
 import 'package:biocheck_flutter/app/data/models/models.dart';
 import 'package:biocheck_flutter/config.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:get/get.dart';
 
 class NewEvaluationProvider extends GetConnect {
   final url = ConfigEnvironments.getUrl();
 
-  uploadEvaluation(Evaluation evaluation, String token) async {
-    final uri = Uri.https(url, 'Beta/forms');
+  Future<Evaluation> uploadEvaluation(
+      Evaluation evaluation, String userId) async {
+    CollectionReference users = FirebaseFirestore.instance.collection('users');
+    final history = users.doc(userId).collection('history');
     final body = {
       "user_id": evaluation.userId,
       "patient_firstName": evaluation.patientFirstName,
@@ -14,9 +17,8 @@ class NewEvaluationProvider extends GetConnect {
       "due_date": evaluation.dueDate,
       "information": {"name": evaluation.template.name}
     };
-    final headers = {
-      "access-token": token,
-    };
-    return await post(uri.toString(), body, headers: headers);
+    final resp = await history.add(body);
+
+    return Evaluation.fromMap((await resp.get()).data()!);
   }
 }

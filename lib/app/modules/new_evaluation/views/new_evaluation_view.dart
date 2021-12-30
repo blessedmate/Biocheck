@@ -74,51 +74,8 @@ class NewEvaluationView extends GetView<NewEvaluationController> {
                       controller.showWarning(controller.lastNameController)
                           ? _warningText()
                           : Container()),
-              // ...controller.template.questions
-              //     .map((e) => Column(
-              //             mainAxisAlignment: MainAxisAlignment.start,
-              //             crossAxisAlignment: CrossAxisAlignment.start,
-              //             children: [
-              //               const SizedBox(
-              //                 height: 10,
-              //               ),
-              //               Text(
-              //                 e,
-              //                 style: TextStyle(fontSize: 20),
-              //               ),
-              //               const SizedBox(
-              //                 height: 10,
-              //               ),
-              //               Row(
-              //                 children: [
-              //                   Row(
-              //                     children: [
-              //                       Text('Si'),
-              //                       Radio(
-              //                           value: 1,
-              //                           groupValue: 1,
-              //                           onChanged: (val) {}),
-              //                     ],
-              //                   ),
-              //                   Row(
-              //                     children: [
-              //                       Text('No'),
-              //                       Radio(
-              //                           value: 0,
-              //                           groupValue: 1,
-              //                           onChanged: (val) {}),
-              //                     ],
-              //                   ),
-              //                 ],
-              //               ),
-              //               const SizedBox(
-              //                 height: 20,
-              //               ),
-              //             ]))
-              //     .toList(),
-              const SizedBox(height: 30),
 
-              // SaveAndPredictButton(controller: controller),
+              const SizedBox(height: 30),
             ],
           ),
         ),
@@ -148,6 +105,37 @@ class NewEvaluationView extends GetView<NewEvaluationController> {
     controller.setSelectedDate(picked);
   }
 }
+
+class SaveAndPredictButton extends StatelessWidget {
+  const SaveAndPredictButton({
+    Key? key,
+    required this.controller,
+  }) : super(key: key);
+
+  final NewEvaluationController controller;
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      margin: const EdgeInsets.symmetric(vertical: 25),
+      width: Get.width * 0.9,
+      height: 65,
+      child: ElevatedButton(
+        onPressed: () => controller.submit(),
+        child: const Text(
+          'Save',
+          style: TypographyStyles.bigbuttons,
+        ),
+        style: ElevatedButton.styleFrom(
+          primary: Palette.primaryColor,
+          shape:
+              RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
+        ),
+      ),
+    );
+  }
+}
+
 
 // class SectionsList extends StatelessWidget {
 //   const SectionsList({Key? key, required this.controller}) : super(key: key);
@@ -212,33 +200,3 @@ class NewEvaluationView extends GetView<NewEvaluationController> {
 //     );
 //   }
 // }
-
-class SaveAndPredictButton extends StatelessWidget {
-  const SaveAndPredictButton({
-    Key? key,
-    required this.controller,
-  }) : super(key: key);
-
-  final NewEvaluationController controller;
-
-  @override
-  Widget build(BuildContext context) {
-    return Container(
-      margin: const EdgeInsets.symmetric(vertical: 25),
-      width: Get.width * 0.9,
-      height: 65,
-      child: ElevatedButton(
-        onPressed: () => controller.submit(),
-        child: const Text(
-          'Save',
-          style: TypographyStyles.bigbuttons,
-        ),
-        style: ElevatedButton.styleFrom(
-          primary: Palette.primaryColor,
-          shape:
-              RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
-        ),
-      ),
-    );
-  }
-}

@@ -17,11 +17,11 @@ void main() async {
   final box = GetStorage();
   SQLiteProvider.db.initDB();
   Get.put(MainController());
-  final token = box.read('token');
+  final userId = box.read('userId');
   runApp(
     GetMaterialApp(
       title: 'BioCheck App',
-      initialRoute: token == null ? Routes.SIGN_IN : Routes.EVALUATIONS,
+      initialRoute: userId == null ? Routes.SIGN_IN : Routes.EVALUATIONS,
       getPages: AppPages.routes,
       debugShowCheckedModeBanner: false,
       theme: ThemeData(

@@ -1,8 +1,6 @@
 import 'package:biocheck_flutter/app/data/models/template.dart';
 import 'package:biocheck_flutter/app/global_widgets/input.dart';
-import 'package:biocheck_flutter/app/routes/app_pages.dart';
 import 'package:biocheck_flutter/app/utils/palette.dart';
-import 'package:biocheck_flutter/app/utils/typography_styles.dart';
 import 'package:flutter/material.dart';
 
 import 'package:get/get.dart';

@@ -31,15 +31,14 @@ class SignInController extends GetxController {
     loading = true;
 
     final provider = AuthProvider();
-    Response resp = await provider.login(username, password);
-
-    if (resp.statusCode == 200) {
+    try {
+      final user = await provider.login(username, password);
+      box.write('userId', user?.user?.uid);
       Get.offAllNamed(Routes.EVALUATIONS);
-      box.write('token', resp.body['token']);
-      box.write('userId', resp.body['data']['id']);
-    } else {
+    } catch (e) {
       error = true;
-      message = resp.body['message'];
+      print(e);
+      message = e.toString().split(":")[1];
     }
     loading = false;
     update(['warning']);
@@ -76,6 +75,6 @@ class SignInController extends GetxController {
   }
 
   goToSignUp() {
-    Get.offAndToNamed(Routes.SIGN_UP);
+    Get.offAllNamed(Routes.SIGN_UP);
   }
 }
