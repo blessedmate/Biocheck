@@ -11,18 +11,5 @@ class EvaluationsProvider extends GetConnect {
     CollectionReference users = FirebaseFirestore.instance.collection('users');
     final history = await users.doc(userId).collection('history').get();
     return history.docs.map((e) => Evaluation.fromMap(e.data())).toList();
-    // if (history) {
-    //   return [];
-    // } else {
-    //   return [];
-    // }
   }
-  // getEvaluations(int userId, String token) async {
-  //   final uri = Uri.https(url, 'Beta/forms/user/$userId');
-  //   final headers = {
-  //     "access-token": token,
-  //   };
-  //   final response = await get(uri.toString(), headers: headers);
-  //   return response;
-  // }
 }

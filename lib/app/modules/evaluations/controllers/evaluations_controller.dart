@@ -88,29 +88,4 @@ class EvaluationsController extends GetxController
           duration: const Duration(seconds: 5));
     }
   }
-  // getEvaluationsFromBackend(String userId) async {
-  //   try {
-  //     final Response response = await provider.getEvaluations(userId);
-  //     if (response.statusCode == null) {
-  //       throw Exception('No internet');
-  //     }
-  //     evaluationsList.clear();
-  //     response.body.forEach((value) {
-  //       final currentEval = Evaluation.fromMap(value);
-  //       evaluationsList.add(currentEval);
-  //     });
-
-  //     if (evaluationsList.isEmpty) {
-  //       change(evaluationsList, status: RxStatus.empty());
-  //     } else {
-  //       SQLiteProvider.db.saveEvaluations(evaluationsList);
-  //       change(evaluationsList, status: RxStatus.success());
-  //     }
-  //   } catch (e) {
-  //     change(evaluationsList, status: RxStatus.success());
-  //     Get.snackbar('No internet connection', 'Displaying older evaluations',
-  //         snackPosition: SnackPosition.BOTTOM,
-  //         duration: const Duration(seconds: 5));
-  //   }
-  // }
 }

@@ -1,3 +1,5 @@
+import 'package:biocheck_flutter/app/modules/settings/bindings/settings_binding.dart';
+import 'package:biocheck_flutter/app/modules/settings/views/settings_view.dart';
 import 'package:get/get.dart';
 
 import 'package:biocheck_flutter/app/modules/begin_evaluation/bindings/begin_evaluation_binding.dart';
@@ -78,6 +80,11 @@ class AppPages {
       name: _Paths.PROFILE,
       page: () => ProfileView(),
       binding: ProfileBinding(),
+    ),
+    GetPage(
+      name: _Paths.SETTINGS,
+      page: () => SettingsView(),
+      binding: SettingsBinding(),
     ),
   ];
 }

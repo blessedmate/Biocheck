@@ -40,16 +40,6 @@ class SignInController extends GetxController {
       print(e);
       message = e.toString().split(":")[1];
     }
-    // Response resp = await provider.login(username, password);
-
-    // if (resp.statusCode == 200) {
-    //   Get.offAllNamed(Routes.EVALUATIONS);
-    //   box.write('token', resp.body['token']);
-    //   box.write('userId', resp.body['data']['id']);
-    // } else {
-    //   error = true;
-    //   message = resp.body['message'];
-    // }
     loading = false;
     update(['warning']);
   }

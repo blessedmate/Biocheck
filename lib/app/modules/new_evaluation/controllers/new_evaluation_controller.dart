@@ -25,8 +25,6 @@ class NewEvaluationController extends GetxController {
   final firstNameController = TextEditingController();
   final lastNameController = TextEditingController();
 
-  // List<RxInt>
-
   @override
   void onInit() {
     super.onInit();
